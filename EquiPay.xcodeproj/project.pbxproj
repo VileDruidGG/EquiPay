@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		AA40FAB62E8D92CA00E85F71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA40FA9E2E8D92C900E85F71 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA40FAA52E8D92C900E85F71;
+			remoteInfo = EquiPay;
+		};
+		AA40FAC02E8D92CA00E85F71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA40FA9E2E8D92C900E85F71 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA40FAA52E8D92C900E85F71;
+			remoteInfo = EquiPay;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AA40FAA62E8D92C900E85F71 /* EquiPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EquiPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA40FAB52E8D92CA00E85F71 /* EquiPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EquiPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA40FABF2E8D92CA00E85F71 /* EquiPayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EquiPayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AA40FAA82E8D92C900E85F71 /* EquiPay */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EquiPay;
+			sourceTree = "<group>";
+		};
+		AA40FAB82E8D92CA00E85F71 /* EquiPayTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EquiPayTests;
+			sourceTree = "<group>";
+		};
+		AA40FAC22E8D92CA00E85F71 /* EquiPayUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EquiPayUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA40FAA32E8D92C900E85F71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA40FAB22E8D92CA00E85F71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA40FABC2E8D92CA00E85F71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA40FA9D2E8D92C900E85F71 = {
+			isa = PBXGroup;
+			children = (
+				AA40FAA82E8D92C900E85F71 /* EquiPay */,
+				AA40FAB82E8D92CA00E85F71 /* EquiPayTests */,
+				AA40FAC22E8D92CA00E85F71 /* EquiPayUITests */,
+				AA40FAA72E8D92C900E85F71 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA40FAA72E8D92C900E85F71 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA40FAA62E8D92C900E85F71 /* EquiPay.app */,
+				AA40FAB52E8D92CA00E85F71 /* EquiPayTests.xctest */,
+				AA40FABF2E8D92CA00E85F71 /* EquiPayUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA40FAA52E8D92C900E85F71 /* EquiPay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA40FAC92E8D92CA00E85F71 /* Build configuration list for PBXNativeTarget "EquiPay" */;
+			buildPhases = (
+				AA40FAA22E8D92C900E85F71 /* Sources */,
+				AA40FAA32E8D92C900E85F71 /* Frameworks */,
+				AA40FAA42E8D92C900E85F71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AA40FAA82E8D92C900E85F71 /* EquiPay */,
+			);
+			name = EquiPay;
+			packageProductDependencies = (
+			);
+			productName = EquiPay;
+			productReference = AA40FAA62E8D92C900E85F71 /* EquiPay.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA40FAB42E8D92CA00E85F71 /* EquiPayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA40FACC2E8D92CA00E85F71 /* Build configuration list for PBXNativeTarget "EquiPayTests" */;
+			buildPhases = (
+				AA40FAB12E8D92CA00E85F71 /* Sources */,
+				AA40FAB22E8D92CA00E85F71 /* Frameworks */,
+				AA40FAB32E8D92CA00E85F71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA40FAB72E8D92CA00E85F71 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AA40FAB82E8D92CA00E85F71 /* EquiPayTests */,
+			);
+			name = EquiPayTests;
+			packageProductDependencies = (
+			);
+			productName = EquiPayTests;
+			productReference = AA40FAB52E8D92CA00E85F71 /* EquiPayTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AA40FABE2E8D92CA00E85F71 /* EquiPayUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA40FACF2E8D92CA00E85F71 /* Build configuration list for PBXNativeTarget "EquiPayUITests" */;
+			buildPhases = (
+				AA40FABB2E8D92CA00E85F71 /* Sources */,
+				AA40FABC2E8D92CA00E85F71 /* Frameworks */,
+				AA40FABD2E8D92CA00E85F71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA40FAC12E8D92CA00E85F71 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AA40FAC22E8D92CA00E85F71 /* EquiPayUITests */,
+			);
+			name = EquiPayUITests;
+			packageProductDependencies = (
+			);
+			productName = EquiPayUITests;
+			productReference = AA40FABF2E8D92CA00E85F71 /* EquiPayUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA40FA9E2E8D92C900E85F71 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					AA40FAA52E8D92C900E85F71 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					AA40FAB42E8D92CA00E85F71 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = AA40FAA52E8D92C900E85F71;
+					};
+					AA40FABE2E8D92CA00E85F71 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = AA40FAA52E8D92C900E85F71;
+					};
+				};
+			};
+			buildConfigurationList = AA40FAA12E8D92C900E85F71 /* Build configuration list for PBXProject "EquiPay" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA40FA9D2E8D92C900E85F71;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AA40FAA72E8D92C900E85F71 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA40FAA52E8D92C900E85F71 /* EquiPay */,
+				AA40FAB42E8D92CA00E85F71 /* EquiPayTests */,
+				AA40FABE2E8D92CA00E85F71 /* EquiPayUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA40FAA42E8D92C900E85F71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA40FAB32E8D92CA00E85F71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA40FABD2E8D92CA00E85F71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA40FAA22E8D92C900E85F71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA40FAB12E8D92CA00E85F71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA40FABB2E8D92CA00E85F71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA40FAB72E8D92CA00E85F71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA40FAA52E8D92C900E85F71 /* EquiPay */;
+			targetProxy = AA40FAB62E8D92CA00E85F71 /* PBXContainerItemProxy */;
+		};
+		AA40FAC12E8D92CA00E85F71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA40FAA52E8D92C900E85F71 /* EquiPay */;
+			targetProxy = AA40FAC02E8D92CA00E85F71 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AA40FAC72E8D92CA00E85F71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA40FAC82E8D92CA00E85F71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA40FACA2E8D92CA00E85F71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coedev.EquiPay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA40FACB2E8D92CA00E85F71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coedev.EquiPay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AA40FACD2E8D92CA00E85F71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coedev.EquiPayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EquiPay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EquiPay";
+			};
+			name = Debug;
+		};
+		AA40FACE2E8D92CA00E85F71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coedev.EquiPayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EquiPay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EquiPay";
+			};
+			name = Release;
+		};
+		AA40FAD02E8D92CA00E85F71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coedev.EquiPayUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EquiPay;
+			};
+			name = Debug;
+		};
+		AA40FAD12E8D92CA00E85F71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C36MU62GK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coedev.EquiPayUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EquiPay;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA40FAA12E8D92C900E85F71 /* Build configuration list for PBXProject "EquiPay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA40FAC72E8D92CA00E85F71 /* Debug */,
+				AA40FAC82E8D92CA00E85F71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA40FAC92E8D92CA00E85F71 /* Build configuration list for PBXNativeTarget "EquiPay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA40FACA2E8D92CA00E85F71 /* Debug */,
+				AA40FACB2E8D92CA00E85F71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA40FACC2E8D92CA00E85F71 /* Build configuration list for PBXNativeTarget "EquiPayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA40FACD2E8D92CA00E85F71 /* Debug */,
+				AA40FACE2E8D92CA00E85F71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA40FACF2E8D92CA00E85F71 /* Build configuration list for PBXNativeTarget "EquiPayUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA40FAD02E8D92CA00E85F71 /* Debug */,
+				AA40FAD12E8D92CA00E85F71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA40FA9E2E8D92C900E85F71 /* Project object */;
+}
