@@ -29,9 +29,25 @@
 		AA40FABF2E8D92CA00E85F71 /* EquiPayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EquiPayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AA37CF3B2E8F4AF000CF15F3 /* Exceptions for "EquiPay" folder in "EquiPay" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Packages/Core/Core,
+				Packages/DesignSystem/DesignSystem,
+				Packages/FeatureFlags/FeatureFlags,
+				Packages/SharedDomain/SharedDomain,
+			);
+			target = AA40FAA52E8D92C900E85F71 /* EquiPay */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		AA40FAA82E8D92C900E85F71 /* EquiPay */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AA37CF3B2E8F4AF000CF15F3 /* Exceptions for "EquiPay" folder in "EquiPay" target */,
+			);
 			path = EquiPay;
 			sourceTree = "<group>";
 		};

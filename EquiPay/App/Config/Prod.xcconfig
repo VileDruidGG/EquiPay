@@ -1,0 +1,8 @@
+//
+//  Prod.xcconfig
+//  EquiPay
+//
+//  Created by Christofher Ontiveros Espino on 02/10/25.
+//
+API_BASE_URL = https://api.equipay.app
+APP_ENV = PROD
