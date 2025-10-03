@@ -4,22 +4,33 @@
 import PackageDescription
 
 let package = Package(
-    name: "FeatureFlags",
-    platforms: [.iOS(.v16)],
+    name: "Onboarding",
+    platforms: [
+            .iOS(.v16)   // <- clave
+        ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "FeatureFlags",
-            targets: ["FeatureFlags"]),
+            name: "Onboarding",
+            targets: ["Onboarding"]),
     ],
+    dependencies: [
+           .package(path: "../../Packages/DesignSystem")
+       ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "FeatureFlags"),
+            name: "Onboarding",
+            dependencies: [
+                .product(name: "DesignSystem", package: "DesignSystem")
+            ]
+        ),
         .testTarget(
-            name: "FeatureFlagsTests",
-            dependencies: ["FeatureFlags"]
+            name: "OnboardingTests",
+            dependencies: [
+                .product(name: "DesignSystem", package: "DesignSystem")
+            ]
         ),
     ]
 )

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    
+
+    <!-- Nombre visible de la app en el springboard -->
+    <key>CFBundleDisplayName</key>
+    <string>EquiPay</string>
+
+    <!-- Identificador único de la app -->
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <!-- Nombre interno de la app -->
+    <key>CFBundleName</key>
+    <string>EquiPay</string>
+
+    <!-- Versión que ve el usuario -->
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+
+    <!-- Build interno (aumenta cada release) -->
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+
+    <!-- Tipo de paquete -->
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <!-- Storyboard o SwiftUI que se usa como LaunchScreen -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <!-- Orientaciones soportadas -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    </array>
+
+    <!-- Mínima versión de iOS -->
+    <key>MinimumOSVersion</key>
+    <string>16.0</string>
+
+
+    <!-- Variables dinámicas desde .xcconfig -->
+    <key>API_BASE_URL</key>
+    <string>$(API_BASE_URL)</string>
+
+    <key>APP_ENV</key>
+    <string>$(APP_ENV)</string>
+
+</dict>
+</plist>

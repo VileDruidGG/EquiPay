@@ -4,4 +4,6 @@
 //
 //  Created by Christofher Ontiveros Espino on 02/10/25.
 //
-
+API_BASE_URL = https://stage.api.equipay.app
+APP_ENV = STAGE
+IPHONEOS_DEPLOYMENT_TARGET = 16.0

@@ -6,3 +6,4 @@
 //
 API_BASE_URL = https://api.equipay.app
 APP_ENV = PROD
+IPHONEOS_DEPLOYMENT_TARGET = 16.0
