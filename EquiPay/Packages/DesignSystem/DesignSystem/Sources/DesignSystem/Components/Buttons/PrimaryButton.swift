@@ -20,9 +20,9 @@ public struct PrimaryButton: View {
             .font(.headline)
             .padding()
             .frame(maxWidth: .infinity)
-            .background(Color.accentColor)
+            .background(LinearGradient(gradient: Gradient(colors: [.mint, .purple]), startPoint: .leading, endPoint: .trailing))
             .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(Capsule())
     }
 }
 
