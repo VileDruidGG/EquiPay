@@ -21,22 +21,38 @@ public struct OnboardingView: View {
 
     // Contenido del carrusel
     private let features: [FeatureCard] = [
-        .init(title: "Manage groups",
-              description: "Create groups for every occasion and easily add participants",
+        .init(title: "Smart Calculation",
+              description: "Automatically split expenses considering different scenarios and custom adjustments.",
+              imageName: "calculation"),
+        .init(title: "Unlimited Groups",
+              description: "Create groups for trips, dinners, roommates, or any occasion where you share expenses.",
               imageName: "groups"),
         .init(title: "Complete History",
-              description: "Keep a clear record of all your shared expenses",
+              description: "Keep a detailed record of all expenses and payments for full transparency.",
               imageName: "history"),
-        .init(title: "Automatic Calculation",
-              description: "Split expenses fairly and transparently",
-              imageName: "calculation")
+        .init(title: "Notifications",
+              description: "Receive automatic reminders for pending payments without being annoying.",
+              imageName: "notifications"),
+        .init(title: "Manual Adjustments",
+              description: "Modify splits when needed for special cases.",
+              imageName: "manual"),
+        .init(title: "Super Fast",
+              description: "A minimalist interface that lets you manage expenses in seconds.",
+              imageName: "fast")
     ]
+
 
     public var body: some View {
         VStack(spacing: 32) {
+            Spacer(minLength: 0)
             // Header
-            Text("EquiPay")
-                .font(.largeTitle.bold())
+            Text("Welcome to ")
+                .font(.largeTitle) + Text("EquiPay").font(.largeTitle.bold()).foregroundStyle(LinearGradient(colors: [.mint, .purple],  startPoint: .leading, endPoint: .trailing))
+            
+            //Subheader
+            Text("Fair splits. Smarter sharing.")
+                .font(.headline.bold())
+                .foregroundColor(.secondary)
 
             // Carousel
             TabView(selection: $currentIndex) {
@@ -55,8 +71,9 @@ public struct OnboardingView: View {
                 GhostButton("Log in") { vm.startAuth() }
                 SecondaryButton("Sign up") { vm.startAuth() }
             }
+            Spacer(minLength: 0)
         }
-        .padding()
+        .frame(alignment: .center).padding()
     }
 }
 
@@ -65,13 +82,17 @@ private struct FeatureSlide: View {
     let card: FeatureCard
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(alignment: .center, spacing: 16) {
             // Imagen desde el bundle del package
             Image.fromModule(card.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 230)
-                .padding(.horizontal, 32)
+                .frame(height: 200)
+                .padding(16)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray.opacity(0.2), lineWidth: 1))
+                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
+                .background(RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(color: .black.opacity(0.4), radius: 8, x: 0, y: 4)).padding(.horizontal,32)
 
             Text(card.title)
                 .font(.title3.bold())
@@ -81,7 +102,7 @@ private struct FeatureSlide: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
-        }
+        }.frame(maxHeight: .infinity, alignment: .top).padding(10)
     }
 }
 
