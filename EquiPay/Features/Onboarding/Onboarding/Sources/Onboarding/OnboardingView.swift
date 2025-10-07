@@ -55,14 +55,15 @@ public struct OnboardingView: View {
                 .foregroundColor(.secondary)
 
             // Carousel
-            TabView(selection: $currentIndex) {
-                ForEach(features.indices, id: \.self) { index in
-                    FeatureSlide(card: features[index])
-                        .tag(index)
-                }
-            }
-            .tabViewStyle(.page(indexDisplayMode: .always))
-            .frame(height: 400)
+            FeatureCarousel(features: features, currentIndex: $currentIndex)
+//            TabView(selection: $currentIndex) {
+//                ForEach(features.indices, id: \.self) { index in
+//                    FeatureSlide(card: features[index])
+//                        .tag(index)
+//                }
+//            }
+//            .tabViewStyle(.page(indexDisplayMode: .always))
+//            .frame(height: 400)
 
             Spacer(minLength: 0)
 
@@ -74,6 +75,74 @@ public struct OnboardingView: View {
             Spacer(minLength: 0)
         }
         .frame(alignment: .center).padding()
+    }
+}
+
+// MARK: - Carousel
+private struct FeatureCarousel: View {
+    let features: [FeatureCard]
+    @Binding var currentIndex: Int
+    
+    @State private var isDragging = false
+    @State private var autoPlay = true
+    private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            ZStack {
+                //Slides
+                TabView(selection: $currentIndex) {
+                    ForEach(features.indices, id: \.self) {
+                        idx in FeatureSlide(card: features[idx])
+                            .tag(idx)
+                            .frame(maxHeight: .infinity, alignment: .top)
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: 420)
+                .highPriorityGesture(
+                    DragGesture(minimumDistance: 10)
+                        .onChanged { _ in
+                            isDragging = false
+                            //reanuda tras 2s
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                autoPlay = true
+                            }
+                        }
+                )
+                
+            }
+            // Indicadores
+                      HStack(spacing: 8) {
+                          ForEach(features.indices, id: \.self) { i in
+                              Capsule()
+                                  .fill(i == currentIndex ? Color.primary.opacity(0.8)
+                                                          : Color.secondary.opacity(0.25))
+                                  .frame(width: i == currentIndex ? 22 : 6, height: 6)
+                                  .animation(.easeInOut(duration: 0.2), value: currentIndex)
+                                  .onTapGesture { goTo(i) }
+                          }
+                      }
+                      .padding(.top, 4)
+            
+        }
+        // Autoplay
+             .onReceive(timer) { _ in
+                 guard autoPlay, !isDragging, !features.isEmpty else { return }
+                 next()
+             }
+             .onDisappear { autoPlay = false }
+    }
+    private func next() {
+        guard !features.isEmpty else { return }
+        withAnimation(.easeInOut) {
+            currentIndex = (currentIndex + 1) % features.count
+        }
+    }
+
+    private func goTo(_ index: Int) {
+        guard index >= 0 && index < features.count else { return }
+        withAnimation(.easeInOut) { currentIndex = index }
     }
 }
 
