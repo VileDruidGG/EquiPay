@@ -1,6 +1,7 @@
 
 import SwiftUI
 import DesignSystem
+import Auth
 
 // MARK: - Model
 struct FeatureCard: Hashable {
@@ -69,8 +70,8 @@ public struct OnboardingView: View {
 
             // CTA Buttons (usa tus componentes del DesignSystem)
             VStack(spacing: 12) {
-                GhostButton("Log in") { vm.startAuth() }
-                SecondaryButton("Sign up") { vm.startAuth() }
+                GhostButton("Log in") { vm.login() }
+                SecondaryButton("Sign up") { vm.signup()  }
             }
             Spacer(minLength: 0)
         }
@@ -201,8 +202,14 @@ extension Image {
 #if DEBUG
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(vm: OnboardingViewModel { })
-            .previewDisplayName("Onboarding")
+        OnboardingView(
+            vm: OnboardingViewModel(
+                onLogin:  { print("Preview: Login tapped") },
+                onSignup: { print("Preview: Signup tapped") }
+            )
+        )
+        .previewDisplayName("Onboarding")
     }
 }
 #endif
+

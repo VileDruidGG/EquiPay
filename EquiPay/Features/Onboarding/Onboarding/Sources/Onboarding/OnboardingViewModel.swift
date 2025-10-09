@@ -7,7 +7,15 @@
 import Foundation
 
 public final class OnboardingViewModel: ObservableObject {
-    public let startAuth: () -> Void
-    public init(startAuth: @escaping () -> Void) { self.startAuth = startAuth }
-}
+    private let onLoginAction:  () -> Void
+    private let onSignupAction: () -> Void
 
+    public init(onLogin: @escaping () -> Void,
+                onSignup: @escaping () -> Void) {
+        self.onLoginAction = onLogin
+        self.onSignupAction = onSignup
+    }
+
+    public func login()  { onLoginAction() }
+    public func signup() { onSignupAction() }
+}
