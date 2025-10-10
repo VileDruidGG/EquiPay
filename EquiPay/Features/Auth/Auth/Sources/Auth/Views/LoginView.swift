@@ -9,7 +9,7 @@ import DesignSystem
 
 public struct LoginView: View {
     
-    @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     
     public var body: some View {
@@ -23,12 +23,13 @@ public struct LoginView: View {
                 .foregroundColor(.secondary).padding(.bottom, 20)
             
             //Form
-            HStack{
-                Image(systemName: "person.fill")
-                TextField("Username", text: $username)
-                
-            }.padding(18)
-                .overlay(Capsule().stroke(Color.gray, lineWidth: 1))
+            EmailInput(email:"fsdf", isValidEmail: false)
+//            HStack{
+//                Image(systemName: "person.fill")
+//                TextField("Email", text: $email)
+//
+//            }.padding(18)
+//                .overlay(Capsule().stroke(Color.gray, lineWidth: 1))
             HStack{
                 Image(systemName: "lock.fill")
                 SecureField("Password", text: $password)
@@ -39,8 +40,11 @@ public struct LoginView: View {
             PrimaryButton("Log In") {
                 print("Go to Home")
             }.padding(.top, 20)
-            Button(action: {}) {
-                Text("Already have an account?")
+            HStack{
+                Text("Don't have an account?")
+                Button(action: {}) {
+                    Text("Sign Up")
+                }
             }
             
             
