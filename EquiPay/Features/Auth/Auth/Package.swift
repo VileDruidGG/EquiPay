@@ -14,11 +14,18 @@ let package = Package(
             name: "Auth",
             targets: ["Auth"]),
     ],
+    dependencies: [
+           .package(path: "../../Packages/DesignSystem")
+       ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Auth"),
+            name: "Auth",
+            dependencies: [
+                .product(name: "DesignSystem", package: "DesignSystem")
+            ]
+        ),
         .testTarget(
             name: "AuthTests",
             dependencies: ["Auth"]
