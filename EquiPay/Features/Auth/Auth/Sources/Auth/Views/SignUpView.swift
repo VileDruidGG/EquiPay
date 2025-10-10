@@ -14,7 +14,7 @@ struct SignUpView: View {
     public var body: some View {
         VStack {
             // Header
-            Text("Let´s create an account").font(.title.bold()).foregroundStyle(LinearGradient(colors: [.mint, .purple],  startPoint: .leading, endPoint: .trailing))
+            Text("Let's create an account").font(.title.bold()).foregroundStyle(LinearGradient(colors: [.mint, .purple],  startPoint: .leading, endPoint: .trailing))
             
             //Subheader
             Text("Joins to start sharing and saving")

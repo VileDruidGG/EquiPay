@@ -9,8 +9,22 @@ import DesignSystem
 
 public struct LoginView: View {
     
+    // Acciones inyectadas desde el coordinator
+    private let onSignUpTap: () -> Void
+    private let onSucces: () -> Void
+    
+    // Estado local
     @State private var email: String = ""
     @State private var password: String = ""
+    
+    //Init público (estás en un package)
+    public init(
+        onSignUpTap: @escaping () -> Void,
+        onSucces: @escaping () -> Void
+    ) {
+        self.onSignUpTap = onSignUpTap
+        self.onSucces = onSucces
+    }
     
     public var body: some View {
         VStack {
@@ -23,7 +37,7 @@ public struct LoginView: View {
                 .foregroundColor(.secondary).padding(.bottom, 20)
             
             //Form
-            EmailInput(email:"fsdf", isValidEmail: false)
+            EmailInput(email:email, isValidEmail: false)
 //            HStack{
 //                Image(systemName: "person.fill")
 //                TextField("Email", text: $email)
@@ -38,16 +52,15 @@ public struct LoginView: View {
             
             //Navigation
             PrimaryButton("Log In") {
-                print("Go to Home")
+                //TODO añadir validación real
+                onSucces()
             }.padding(.top, 20)
             HStack{
                 Text("Don't have an account?")
-                Button(action: {}) {
+                Button(action: onSignUpTap) {
                     Text("Sign Up")
                 }
             }
-            
-            
         }.padding(.horizontal, 18)
     }
 }
@@ -55,5 +68,7 @@ public struct LoginView: View {
 
 
 #Preview {
-    LoginView()
+    LoginView(
+        onSignUpTap: {print("Go to sign up")}, onSucces: {print("login success")}
+    )
 }
