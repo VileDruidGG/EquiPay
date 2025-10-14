@@ -22,23 +22,34 @@ public struct AuthContainer {
 private struct AuthRootView: View {
     @StateObject private var coordinator: AuthCoordinator
     
-    init(route: AuthRoute,
-         onFinished: @escaping () -> Void) {
-        _coordinator = StateObject(
-            wrappedValue: AuthCoordinator(route: route, onFinished: onFinished)
-        )
+    // Fábricas inmutables (no se recrean en body)
+    private let loginVMFactory: () -> LoginViewModel
+    //private let signUpVMFactory: () -> SignUpViewModel
+
+    
+    init(route: AuthRoute, onFinished: @escaping () -> Void) {
+        let coord = AuthCoordinator(route: route, onFinished: onFinished)
+        _coordinator = StateObject(wrappedValue: coord)
+
+        self.loginVMFactory = { [weak coord] in
+            LoginViewModel(
+                onSignUpTap: { coord?.goToSignUp() },
+                onSuccess:   { coord?.finish() }
+            )
+        }
+        /*
+        self.signUpVMFactory = { [weak coord] in
+            SignUpViewModel(
+                onHaveAccountTap: { coord?.goToLogin() },
+                onSuccess:        { coord?.finish() }
+            )
+        }
+         */
     }
     
     var body: some View {
         NavigationStack {
             content
-                .navigationTitle(title(for: coordinator.route))
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing){
-                        Button("Finish") {coordinator.finish()}
-                    }
-                }
-            
         }
     }
     
@@ -47,22 +58,11 @@ private struct AuthRootView: View {
     private var content: some View {
         switch coordinator.route {
         case .login:
-            LoginPlaceholderView(
-                onSignUpTap: {coordinator.goToSignUp()}, onSuccess: {coordinator.finish()}
-            )
+            LoginView(vm: loginVMFactory())
         case .signup:
             SignUpPlaceholderView(
                 onHaveAccountTap: {coordinator.goToLogin()}, onSuccess: {coordinator.finish()}
             )
-        }
-    }
-    
-    private func title(for route: AuthRoute) -> String {
-        switch route {
-        case .login:
-            return "Login"
-        case .signup:
-            return "Sign Up"
         }
     }
 }

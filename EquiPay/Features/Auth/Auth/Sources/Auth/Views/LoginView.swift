@@ -2,28 +2,18 @@
 //  LoginView.swift
 //  Auth
 //
-//  Created by Christofher Ontiveros Espino on 08/10/25.
+//  Created by Christofher Ontiveros Espino on 08/10/25./Users/christofherontiverosespino/Documents/GitHub/EquiPay/EquiPay/Features/Auth/Auth/Sources/Auth/ViewModels/LoginViewModel.swift
 //
 import SwiftUI
 import DesignSystem
 
 public struct LoginView: View {
     
-    // Acciones inyectadas desde el coordinator
-    private let onSignUpTap: () -> Void
-    private let onSucces: () -> Void
-    
-    // Estado local
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @StateObject private var vm: LoginViewModel
     
     //Init público (estás en un package)
-    public init(
-        onSignUpTap: @escaping () -> Void,
-        onSucces: @escaping () -> Void
-    ) {
-        self.onSignUpTap = onSignUpTap
-        self.onSucces = onSucces
+    public init(vm: LoginViewModel) {
+        _vm = StateObject(wrappedValue: vm)
     }
     
     public var body: some View {
@@ -37,7 +27,7 @@ public struct LoginView: View {
                 .foregroundColor(.secondary).padding(.bottom, 20)
             
             //Form
-            EmailInput(email:email, isValidEmail: false)
+            EmailInput(email: vm.email, isValidEmail: false)
 //            HStack{
 //                Image(systemName: "person.fill")
 //                TextField("Email", text: $email)
@@ -46,29 +36,19 @@ public struct LoginView: View {
 //                .overlay(Capsule().stroke(Color.gray, lineWidth: 1))
             HStack{
                 Image(systemName: "lock.fill")
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $vm.password)
             }.padding(18)
                 .overlay(Capsule().stroke(Color.gray, lineWidth: 1))
             
             //Navigation
             PrimaryButton("Log In") {
                 //TODO añadir validación real
-                onSucces()
+                vm.login()
             }.padding(.top, 20)
             HStack{
                 Text("Don't have an account?")
-                Button(action: onSignUpTap) {
-                    Text("Sign Up")
-                }
+                Button("Sign Up"){vm.goToSignUp()}
             }
         }.padding(.horizontal, 18)
     }
-}
-
-
-
-#Preview {
-    LoginView(
-        onSignUpTap: {print("Go to sign up")}, onSucces: {print("login success")}
-    )
 }
