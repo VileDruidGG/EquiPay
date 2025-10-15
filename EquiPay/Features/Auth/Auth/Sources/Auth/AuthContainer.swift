@@ -24,7 +24,7 @@ private struct AuthRootView: View {
     
     // Fábricas inmutables (no se recrean en body)
     private let loginVMFactory: () -> LoginViewModel
-    //private let signUpVMFactory: () -> SignUpViewModel
+    private let signUpVMFactory: () -> SignUpViewModel
 
     
     init(route: AuthRoute, onFinished: @escaping () -> Void) {
@@ -37,14 +37,14 @@ private struct AuthRootView: View {
                 onSuccess:   { coord?.finish() }
             )
         }
-        /*
+        
         self.signUpVMFactory = { [weak coord] in
             SignUpViewModel(
-                onHaveAccountTap: { coord?.goToLogin() },
-                onSuccess:        { coord?.finish() }
+                onLoginTap: { coord?.goToLogin() },
+                onSuccess: { coord?.finish() }
             )
         }
-         */
+         
     }
     
     var body: some View {
@@ -60,9 +60,7 @@ private struct AuthRootView: View {
         case .login:
             LoginView(vm: loginVMFactory())
         case .signup:
-            SignUpPlaceholderView(
-                onHaveAccountTap: {coordinator.goToLogin()}, onSuccess: {coordinator.finish()}
-            )
+            SignUpView(vm:  signUpVMFactory())
         }
     }
 }
