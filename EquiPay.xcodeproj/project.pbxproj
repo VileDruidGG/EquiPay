@@ -13,6 +13,7 @@
 		AA37CF492E8F83A400CF15F3 /* FeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = AA37CF482E8F83A400CF15F3 /* FeatureFlags */; };
 		AA37CF4B2E8F83A400CF15F3 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = AA37CF4A2E8F83A400CF15F3 /* Onboarding */; };
 		AA37CF4D2E8F83A400CF15F3 /* SharedDomain in Frameworks */ = {isa = PBXBuildFile; productRef = AA37CF4C2E8F83A400CF15F3 /* SharedDomain */; };
+		AA5280DE2EA0138300E5E9BA /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = AA5280DD2EA0138300E5E9BA /* Home */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 			membershipExceptions = (
 				App/Info.plist,
 				Features/Auth/Auth,
+				Features/Home/Home,
 				Features/Onboarding/Onboarding,
 				Packages/Core/Core,
 				Packages/DesignSystem/DesignSystem,
@@ -86,6 +88,7 @@
 				AA37CF4B2E8F83A400CF15F3 /* Onboarding in Frameworks */,
 				AA37CF432E8F83A400CF15F3 /* Auth in Frameworks */,
 				AA37CF452E8F83A400CF15F3 /* Core in Frameworks */,
+				AA5280DE2EA0138300E5E9BA /* Home in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +163,7 @@
 				AA37CF482E8F83A400CF15F3 /* FeatureFlags */,
 				AA37CF4A2E8F83A400CF15F3 /* Onboarding */,
 				AA37CF4C2E8F83A400CF15F3 /* SharedDomain */,
+				AA5280DD2EA0138300E5E9BA /* Home */,
 			);
 			productName = EquiPay;
 			productReference = AA40FAA62E8D92C900E85F71 /* EquiPay.app */;
@@ -799,6 +803,10 @@
 		AA37CF4C2E8F83A400CF15F3 /* SharedDomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedDomain;
+		};
+		AA5280DD2EA0138300E5E9BA /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
