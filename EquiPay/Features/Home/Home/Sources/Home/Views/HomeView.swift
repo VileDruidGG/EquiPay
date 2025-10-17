@@ -5,6 +5,7 @@
 //  Created by Christofher Ontiveros Espino on 15/10/25.
 //
 import SwiftUI
+import DesignSystem
 
 public struct HomeView: View {
     
@@ -15,7 +16,7 @@ public struct HomeView: View {
             VStack{
                 HStack{
                     VStack(alignment: .leading){
-                        Text("Hola \(username)").font(.largeTitle)
+                        Text("Hola \(username)").font(.largeTitle).bold()
                         Text("Manage your shared expenses")
                     }
                     ZStack{
@@ -26,19 +27,40 @@ public struct HomeView: View {
                         Button(action: {
                             print("+ pressed")
                         }) {
-                            Image(systemName: "plus")
+                            Image(systemName: "plus").foregroundColor(Color.white)
                         }
                     }
                     .padding()
-                    .background(Color.white.opacity(0.2))
-                    .cornerRadius(21)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.white, lineWidth: 1)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color.white.opacity(0.2))
+                            )
+                    )
+
                     
                 }
                 HStack{
-                    Text("Expenses")
+                    SummaryCard(
+                        title: "They owe you",
+                        amount: "$450",
+                        icon: "dollarsign",
+                        color: Color.green)
+                    SummaryCard(
+                        title: "You owe",
+                        amount: "$450",
+                        icon: "dollarsign",
+                        color: Color.red)
+                    SummaryCard(
+                        title: "Active Groups",
+                        amount: "3",
+                        icon: "person.3.fill",
+                        color: Color.purple)
                     
-                }
-            }.frame(maxWidth: .infinity, maxHeight: geometry.size.height * 0.3)
+                }.padding()
+            }.frame(maxWidth: .infinity, maxHeight: geometry.size.height * 0.6)
                 .background(LinearGradient(colors: [Color.mint, Color.purple], startPoint: .topLeading, endPoint: .bottomTrailing))
         }
         VStack{
