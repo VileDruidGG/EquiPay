@@ -75,6 +75,11 @@ public struct HomeView: View {
                 }
                 
             }
+            
+            ExpenseCard(icon: "person.3.fill", title: "Viaje de fin de año", participantsAmount: 10, amount: "2790", status: ExpenseStatus.paid)
+            ExpenseCard(icon: "arrow.trianglehead.2.clockwise.rotate.90", title: "Viaje de fin de año", participantsAmount: 10, amount: "2790", status: ExpenseStatus.paid)
+            ExpenseCard(icon: "bag", title: "Viaje de fin de año", participantsAmount: 10, amount: "2790", status: ExpenseStatus.paid)
+            
             Text("Quick Access").font(.title)
             HStack{
                 
