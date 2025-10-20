@@ -30,23 +30,40 @@ public struct ExpenseCard: View {
     }
     
     public var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .center, spacing: 10) {
             Image(systemName: icon)
-                .foregroundColor(.secondary)
-                .font(.caption)
+                .foregroundColor(Color.green)
+                .font(.subheadline)
+                .frame(width: 36, height: 36)
+                .background(RoundedRectangle(cornerRadius: 50)
+                    .fill(Color.mint.opacity(0.1)))
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
-                Text("\(participantsAmount) Participant\(participantsAmount == 1 ? "" : "s")")
+                Text("\(participantsAmount) participant\(participantsAmount == 1 ? "" : "s")")
             }
+            Spacer()
             VStack{
                 Text(amount)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(.headline)
+                    .foregroundColor(.green)
                 Text(status.rawValue)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(.footnote)
+                    .foregroundColor(.green)
+                    .padding(10)
+                    .frame(width: .infinity, height: 20)
+                    .background(RoundedRectangle(cornerRadius: 50)
+                        .fill(Color.mint.opacity(0.1)))
             }
         }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: 140, alignment: .center)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.gray.opacity(0.8), lineWidth: 1)
+                .background(RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.white)
+                )
+            )
     }
 }
