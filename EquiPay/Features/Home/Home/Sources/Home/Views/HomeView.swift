@@ -82,7 +82,8 @@ public struct HomeView: View {
             
             Text("Quick Access").font(.title)
             HStack{
-                
+                QuickActionCard(title: "Create group", icon: "plus", isPrincipal: true)
+                QuickActionCard(title: "Ver historial", icon: "clock", isPrincipal: false)
                 
             }
             Spacer()
