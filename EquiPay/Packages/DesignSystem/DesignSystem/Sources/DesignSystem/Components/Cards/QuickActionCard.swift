@@ -21,15 +21,19 @@ public struct QuickActionCard: View {
     
     public var body: some View {
         VStack{
-            Image(systemName: icon)
-            Text(title)
+            Image(systemName: icon).foregroundColor(isPrincipal ? Color.white: Color.black)
+            Text(title).foregroundColor(isPrincipal ? Color.white: Color.black).bold()
         }
         .padding()
         .frame(width: 150, height: 100)
         .background(RoundedRectangle(cornerRadius: 16)
-            .stroke(Color.gray.opacity(0.8), lineWidth: 1)
+            .stroke(Color.gray.opacity(0.8), lineWidth: isPrincipal ? 0:1)
             .background(RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
+                .fill(isPrincipal ?
+                      AnyShapeStyle( LinearGradient(colors: [Color.mint, Color.purple],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing))
+                      : AnyShapeStyle( Color.white))
             )
         )
         
