@@ -13,7 +13,7 @@ public struct MainTabCoordinator {
     
     public init() {}
     
-    @MainActor @ViewBuilder
+    @ViewBuilder
     public func makeHome() -> some View {
         HomeView()
     }

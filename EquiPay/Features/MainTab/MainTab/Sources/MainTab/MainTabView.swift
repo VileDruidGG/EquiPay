@@ -5,7 +5,7 @@
 //  Created by Christofher Ontiveros Espino on 27/10/25.
 //
 import SwiftUI
-
+import DesignSystem
 
 @MainActor
 public struct MainTabView: View {
