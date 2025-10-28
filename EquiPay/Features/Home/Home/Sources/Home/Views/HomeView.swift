@@ -11,6 +11,10 @@ public struct HomeView: View {
     
     @State private var username = "Paco"
     
+    public init() {
+        
+    }
+    
     public var body: some View {
         GeometryReader { geometry in
             VStack{

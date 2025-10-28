@@ -14,6 +14,7 @@
 		AA37CF4B2E8F83A400CF15F3 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = AA37CF4A2E8F83A400CF15F3 /* Onboarding */; };
 		AA37CF4D2E8F83A400CF15F3 /* SharedDomain in Frameworks */ = {isa = PBXBuildFile; productRef = AA37CF4C2E8F83A400CF15F3 /* SharedDomain */; };
 		AA5280DE2EA0138300E5E9BA /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = AA5280DD2EA0138300E5E9BA /* Home */; };
+		AA5280E22EB0557200E5E9BA /* MainTab in Frameworks */ = {isa = PBXBuildFile; productRef = AA5280E12EB0557200E5E9BA /* MainTab */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 				App/Info.plist,
 				Features/Auth/Auth,
 				Features/Home/Home,
+				Features/MainTab/MainTab,
 				Features/Onboarding/Onboarding,
 				Packages/Core/Core,
 				Packages/DesignSystem/DesignSystem,
@@ -85,6 +87,7 @@
 				AA37CF472E8F83A400CF15F3 /* DesignSystem in Frameworks */,
 				AA37CF4D2E8F83A400CF15F3 /* SharedDomain in Frameworks */,
 				AA37CF492E8F83A400CF15F3 /* FeatureFlags in Frameworks */,
+				AA5280E22EB0557200E5E9BA /* MainTab in Frameworks */,
 				AA37CF4B2E8F83A400CF15F3 /* Onboarding in Frameworks */,
 				AA37CF432E8F83A400CF15F3 /* Auth in Frameworks */,
 				AA37CF452E8F83A400CF15F3 /* Core in Frameworks */,
@@ -164,6 +167,7 @@
 				AA37CF4A2E8F83A400CF15F3 /* Onboarding */,
 				AA37CF4C2E8F83A400CF15F3 /* SharedDomain */,
 				AA5280DD2EA0138300E5E9BA /* Home */,
+				AA5280E12EB0557200E5E9BA /* MainTab */,
 			);
 			productName = EquiPay;
 			productReference = AA40FAA62E8D92C900E85F71 /* EquiPay.app */;
@@ -807,6 +811,10 @@
 		AA5280DD2EA0138300E5E9BA /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
+		};
+		AA5280E12EB0557200E5E9BA /* MainTab */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MainTab;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
