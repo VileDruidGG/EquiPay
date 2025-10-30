@@ -29,21 +29,21 @@ public struct MainTabView: View {
                 }
                 .tag(MainTabItem.home)
 
-            coordinator.makeProfile()
+            coordinator.makeExpenses()
                 .tabItem {
                     MainTabItem.expenses.icon
                     Text(MainTabItem.expenses.title)
                 }
                 .tag(MainTabItem.expenses)
             
-            coordinator.makeProfile()
+            coordinator.makeAdd()
                 .tabItem {
                     MainTabItem.add.icon
                     Text(MainTabItem.add.title)
                 }
                 .tag(MainTabItem.add)
             
-            coordinator.makeProfile()
+            coordinator.makeHistory()
                 .tabItem {
                     MainTabItem.history.icon
                     Text(MainTabItem.history.title)
@@ -57,6 +57,7 @@ public struct MainTabView: View {
                 }
                 .tag(MainTabItem.profile)
         }
+        .tint(Color.green)
     }
 }
 

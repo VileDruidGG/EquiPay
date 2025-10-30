@@ -29,8 +29,8 @@ public enum MainTabItem: Hashable {
         case .home: return "house"
         case .expenses: return "cart.fill"
         case .add: return "plus"
-        case .history: return "list.bullet"
-        case .profile: return "person.circle"
+        case .history: return "clock"
+        case .profile: return "person"
         }
     }
     

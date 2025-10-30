@@ -24,7 +24,19 @@ public struct MainTabCoordinator {
     }
     
     @ViewBuilder
+    public func makeAdd() -> some View {
+        Text("Add")
+    }
+    
+    @ViewBuilder
+    public func makeHistory() -> some View {
+        Text("Profile")
+    }
+    
+    @ViewBuilder
     public func makeProfile() -> some View {
         Text("Profile")
     }
+    
+    
 }
