@@ -31,6 +31,27 @@ public struct MainTabView: View {
 
             coordinator.makeProfile()
                 .tabItem {
+                    MainTabItem.expenses.icon
+                    Text(MainTabItem.expenses.title)
+                }
+                .tag(MainTabItem.expenses)
+            
+            coordinator.makeProfile()
+                .tabItem {
+                    MainTabItem.add.icon
+                    Text(MainTabItem.add.title)
+                }
+                .tag(MainTabItem.add)
+            
+            coordinator.makeProfile()
+                .tabItem {
+                    MainTabItem.history.icon
+                    Text(MainTabItem.history.title)
+                }
+                .tag(MainTabItem.history)
+            
+            coordinator.makeProfile()
+                .tabItem {
                     MainTabItem.profile.icon
                     Text(MainTabItem.profile.title)
                 }
