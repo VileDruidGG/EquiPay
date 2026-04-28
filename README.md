@@ -24,6 +24,7 @@ de forma justa y sin fricción.
 - [Funcionalidades implementadas](#-funcionalidades-implementadas)
 - [Stack técnico](#-stack-técnico)
 - [Configuración por entornos](#-configuración-por-entornos)
+- [Higiene del repositorio](#-higiene-del-repositorio)
 - [Cómo correr el proyecto (iOS)](#-cómo-correr-el-proyecto-ios)
 - [Roadmap](#-roadmap)
 - [Convenciones del repositorio](#-convenciones-del-repositorio)
@@ -280,6 +281,42 @@ en el módulo `Core`.
 
 ---
 
+## 🧹 Higiene del repositorio
+
+El repo tiene un `.gitignore` raíz que cubre tanto iOS/Xcode como
+Android/Gradle (preparado para cuando se agregue el módulo Android), además
+de los secretos que nunca deben commitearse.
+
+**Lo que NO se commitea:**
+
+- `xcuserdata/`, `*.xcuserstate`, breakpoints y schemes personales — son
+  archivos por usuario que Xcode regenera automáticamente al abrir el
+  proyecto.
+- `build/`, `DerivedData/`, `.build/`, `.swiftpm/` — artefactos de build de
+  Xcode y SPM.
+- `Pods/`, `Carthage/Build/` — por si en el futuro se integran (con CocoaPods
+  el `Podfile.lock` SÍ se commitea).
+- `.gradle/`, `local.properties`, `**/build/`, `*.jks`, `*.keystore`,
+  `keystore.properties` — equivalentes para Android.
+- `.env`, `.env.*`, `secrets.xcconfig`, `*.private.xcconfig`,
+  `GoogleService-Info.plist`, `google-services.json` — credenciales y
+  configuración local.
+
+**Lo que SÍ se commitea:**
+
+- `Package.resolved` (cuando exista) — fija las versiones de dependencias
+  SPM para builds reproducibles.
+- Schemes compartidos bajo `xcshareddata/xcschemes/` — son del proyecto, no
+  del usuario.
+
+**Patrón de secretos:** cuando se necesite consumir API keys o credenciales,
+se creará un `secrets.xcconfig` local (ignorado) que se incluye desde los
+xcconfig por entorno con `#include? "secrets.xcconfig"`. Habrá un
+`secrets.example.xcconfig` (sí trackeado) como plantilla. En Android se
+seguirá el mismo patrón con `local.properties` + `BuildConfig`.
+
+---
+
 ## ▶️ Cómo correr el proyecto (iOS)
 
 ### Requisitos
@@ -354,6 +391,14 @@ open EquiPay.xcodeproj
   la otra.
 - **Una feature = un módulo.** Las features no se importan entre sí; se
   comunican vía coordinators y contratos en `SharedDomain`.
+- **Sin secretos en el repo.** API keys, credenciales y archivos `.env`,
+  `secrets.xcconfig`, `GoogleService-Info.plist`, `google-services.json` o
+  `keystore` están explícitamente ignorados. Si necesitas configuración
+  local, sigue el patrón de `secrets.xcconfig` documentado en
+  [Higiene del repositorio](#-higiene-del-repositorio).
+- **Archivos por usuario fuera del repo.** `xcuserdata/`, breakpoints y
+  schemes personales nunca se commitean — Xcode los regenera al abrir el
+  proyecto.
 
 ---
 
