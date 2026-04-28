@@ -1,0 +1,119 @@
+# ============================================================================
+# EquiPay — root .gitignore
+# Cubre iOS/Xcode (actual), Android/Gradle (futuro) y archivos generales.
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# General / OS
+# ---------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------------------------------------
+# Editores / IDEs
+# ---------------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---------------------------------------------------------------------------
+# iOS / Xcode
+# ---------------------------------------------------------------------------
+
+# User-specific Xcode files (NO compartir entre developers)
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad/
+*.xcscmblueprint
+*.xccheckout
+
+# Build artifacts
+build/
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Xcode patch
+*.moved-aside
+
+# Playground
+timeline.xctimeline
+playground.xcworkspace
+
+# CocoaPods (por si en algún momento se agregan)
+Pods/
+*.xcworkspace
+!EquiPay.xcworkspace
+# (Cuando uses Pods, también deberías commitear Podfile.lock; SOLO se ignora
+# el folder Pods/. Quita este bloque si decides commitear los Pods.)
+
+# Carthage (por si se llega a usar)
+Carthage/Build/
+Carthage/Checkouts
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.pins
+# Package.resolved SÍ se commitea para builds reproducibles — no lo ignores.
+
+# Fastlane (por si se llega a usar)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ---------------------------------------------------------------------------
+# Android / Gradle (preparado para cuando se agregue el módulo Android)
+# ---------------------------------------------------------------------------
+*.iml
+.gradle/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+release/
+
+# Android Studio / IntelliJ
+*.ipr
+*.iws
+.navigation/
+proguard/
+
+# Build artifacts
+**/build/
+**/bin/
+
+# Keystore — NUNCA debe estar en el repo
+*.jks
+*.keystore
+keystore.properties
+
+# ---------------------------------------------------------------------------
+# Secretos / configuración local — NUNCA commitear credenciales
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+secrets.xcconfig
+*.private.xcconfig
+GoogleService-Info.plist
+google-services.json
+
+# ---------------------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
