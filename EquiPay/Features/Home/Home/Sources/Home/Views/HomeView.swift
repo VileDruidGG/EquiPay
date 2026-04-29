@@ -8,30 +8,26 @@ import SwiftUI
 import DesignSystem
 
 public struct HomeView: View {
-    
-    @State public var username = "Paco"
-    
-    public init() {
-        
-    }
-    
+
+    @State public var username = "Usuario"
+
+    public init() {}
+
     public var body: some View {
-        
-        ScrollView(showsIndicators: false){
-            VStack(spacing: 0){
-                //HEADER
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                // MARK: Header con gradiente
                 headerSection
                     .background(
                         LinearGradient(
-                            colors: [Color.mint, Color.purple],
+                            colors: [Color(red: 0.24, green: 0.78, blue: 0.75), Color.purple],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
-                    .foregroundColor(.primary)
                     .padding(.bottom, 16)
-                
-                //CONTENT
+
+                // MARK: Contenido principal
                 contentSection
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
@@ -40,144 +36,150 @@ public struct HomeView: View {
         }
         .background(Color(.systemBackground))
         .ignoresSafeArea(edges: .top)
-        
     }
-    
-    //MARK: Subviews
+
+    // MARK: - Header
+
     @MainActor
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 16){
-            HStack(alignment: .top){
-                VStack(alignment: .leading, spacing: 4){
-                    Text("Hola \(username)").font(.largeTitle).bold().foregroundColor(Color.white)
-                    Text("Manage your shared expenses").foregroundColor(Color.white)
+        VStack(alignment: .leading, spacing: 20) {
+            // Saludo + campana
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Hola, \(username) 👋")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                    Text("Administra tus gastos compartidos")
+                        .font(.subheadline)
+                        .foregroundColor(Color.white.opacity(0.85))
                 }
-                
+
                 Spacer()
-                
+
                 Button(action: {
-                    print("+ pressed")
+                    print("notificaciones pressed")
                 }) {
-                    Image(systemName: "plus")
+                    Image(systemName: "bell")
                         .font(.body.bold())
                         .foregroundColor(.white)
                         .padding(15)
                         .background(
-                            RoundedRectangle(cornerRadius: 12)
+                            RoundedRectangle(cornerRadius: 14)
                                 .fill(Color.white.opacity(0.2))
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                                    .stroke(Color.white.opacity(0.8), lineWidth: 1)
-                                    )
-                            )
-                    }
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                                )
+                        )
+                }
             }
-            
-            // Cards resumen
-                    HStack(spacing: 12) {
-                        SummaryCard(
-                            title: "They owe you",
-                            amount: "$450",
-                            icon: "dollarsign",
-                            color: .green
-                        )
 
-                        SummaryCard(
-                            title: "You owe",
-                            amount: "$450",
-                            icon: "dollarsign",
-                            color: .red
-                        )
-
-                        SummaryCard(
-                            title: "Active Groups",
-                            amount: "3",
-                            icon: "person.3.fill",
-                            color: .purple
-                        )
-                    }
+            // Tarjetas de resumen
+            HStack(spacing: 10) {
+                SummaryCard(
+                    title: "Te deben",
+                    amount: "$450",
+                    icon: "arrow.up.right"
+                )
+                SummaryCard(
+                    title: "Debes",
+                    amount: "$125",
+                    icon: "dollarsign"
+                )
+                SummaryCard(
+                    title: "Grupos activos",
+                    amount: "3",
+                    icon: "person.2"
+                )
+            }
         }
         .padding(.top, 60)
         .padding(.horizontal, 20)
-        .padding(.bottom, 20)
+        .padding(.bottom, 24)
     }
-    
+
+    // MARK: - Contenido
+
     @MainActor
     private var contentSection: some View {
-        VStack(alignment: .leading, spacing: 24){
-            // Recent Expenses header
-            HStack {
-                Text("Recent Expenses")
-                    .font(.title2.bold())
-                
-                Spacer()
-                
-                Button {
-                    print("See all pressed")
-                } label: {
-                    HStack(spacing: 4) {
-                        Text("See All")
-                            .font(.subheadline)
-                        Image(systemName: "chevron.right")
-                            .font(.subheadline)
+        VStack(alignment: .leading, spacing: 28) {
+
+            // MARK: Grupos recientes
+            VStack(alignment: .leading, spacing: 14) {
+                HStack {
+                    Text("Grupos recientes")
+                        .font(.title2)
+                        .bold()
+                    Spacer()
+                    Button {
+                        print("Ver todos pressed")
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text("Ver todos")
+                                .font(.subheadline)
+                            Image(systemName: "arrow.right")
+                                .font(.subheadline)
+                        }
+                        .foregroundColor(.secondary)
                     }
                 }
+
+                VStack(spacing: 12) {
+                    ExpenseCard(
+                        icon: "arrow.trianglehead.2.clockwise.rotate.90",
+                        iconBackground: Color.purple.opacity(0.12),
+                        title: "YouTube Premium",
+                        participantsAmount: 5,
+                        amount: "50",
+                        status: .pending,
+                        balanceDirection: .negative
+                    )
+                    ExpenseCard(
+                        icon: "briefcase",
+                        iconBackground: Color.teal.opacity(0.12),
+                        title: "Viaje CDMX",
+                        participantsAmount: 5,
+                        amount: "450",
+                        status: .pending,
+                        balanceDirection: .positive
+                    )
+                    ExpenseCard(
+                        icon: "briefcase",
+                        iconBackground: Color.teal.opacity(0.12),
+                        title: "Roomies Casa",
+                        participantsAmount: 3,
+                        amount: "0",
+                        status: .completed,
+                        balanceDirection: .neutral
+                    )
+                }
             }
-            
-            VStack(spacing: 12) {
-                   ExpenseCard(
-                       icon: "person.3.fill",
-                       title: "Viaje de fin de año",
-                       participantsAmount: 10,
-                       amount: "2790",
-                       status: .paid
-                   )
-                   ExpenseCard(
-                       icon: "arrow.trianglehead.2.clockwise.rotate.90",
-                       title: "Cena viernes",
-                       participantsAmount: 4,
-                       amount: "680",
-                       status: .paid
-                   )
-                   ExpenseCard(
-                       icon: "bag",
-                       title: "Super de la casa",
-                       participantsAmount: 3,
-                       amount: "1240",
-                       status: .paid
-                   )
-               }
-            
-            VStack(alignment: .leading, spacing: 12) {
-                     Text("Quick Access")
-                         .font(.title2.bold())
 
-                HStack(alignment: .center, spacing: 12) {
-                         QuickActionCard(
-                             title: "Create group",
-                             icon: "plus",
-                             isPrincipal: true
-                         )
+            // MARK: Acciones rápidas
+            VStack(alignment: .leading, spacing: 14) {
+                Text("Acciones rápidas")
+                    .font(.title2)
+                    .bold()
 
-                         QuickActionCard(
-                             title: "Ver historial",
-                             icon: "clock",
-                             isPrincipal: false
-                         )
-                     }
-                 }
-            
+                HStack(spacing: 12) {
+                    QuickActionCard(
+                        title: "Crear grupo",
+                        icon: "plus",
+                        isPrincipal: true
+                    )
+                    QuickActionCard(
+                        title: "Actividad",
+                        icon: "bell",
+                        isPrincipal: false
+                    )
+                }
+            }
+
             Spacer(minLength: 40)
         }
     }
-    
 }
-
-
-
-
-
-
 
 #Preview {
     HomeView()

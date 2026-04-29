@@ -168,14 +168,14 @@ EquiPay/
 |--------|--------|-----------------|
 | **Onboarding** | 🟢 Implementado | Carrusel de 6 features con autoplay, indicadores tap-to-go, CTAs `Log in` / `Sign up`. Imágenes empaquetadas como recurso del package. |
 | **Auth** | 🟡 UI lista, sin lógica real | `LoginView`, `SignUpView`, `LoginViewModel`, `SignUpViewModel`, `AuthCoordinator`, `AuthContainer`, `AuthRoute`. Login/Signup hacen `print` y simulan éxito. |
-| **Home** | 🟡 UI con datos mock | Header con gradiente, tres `SummaryCard` (te deben / debes / grupos activos), lista de `ExpenseCard` y sección "Quick Access" con `QuickActionCard`. Sin datos reales. |
+| **Home** | 🟡 UI con datos mock | Header con gradiente, saludo en español + subtítulo, botón de notificaciones, tres `SummaryCard` (te deben / debes / grupos activos), sección "Grupos recientes" con `ExpenseCard` (balance direccional verde/rojo, badges de estado en español) y sección "Acciones rápidas" con `QuickActionCard`. Sin datos reales. |
 | **MainTab** | 🟡 Estructura básica | `TabView` con 5 pestañas (Home, Expenses, Add, History, Profile). Solo `Home` tiene contenido real; el resto son `Text("…")` placeholder. |
 
 ### Packages (transversales)
 
 | Módulo | Estado | Propósito |
 |--------|--------|----------|
-| **DesignSystem** | 🟢 En uso | Componentes públicos: `PrimaryButton`, `SecondaryButton`, `GhostButton`, `SummaryCard`, `ExpenseCard`, `QuickActionCard`, `EmailInput`, `TextFields`. |
+| **DesignSystem** | 🟢 En uso | Componentes públicos: `PrimaryButton`, `SecondaryButton`, `GhostButton`, `SummaryCard`, `ExpenseCard` (con `ExpenseStatus` y `BalanceDirection`), `QuickActionCard`, `EmailInput`, `TextFields`. |
 | **Core** | 🔴 Vacío | Reservado para utilidades transversales (networking, logging, persistencia, extensions). |
 | **SharedDomain** | 🔴 Vacío | Reservado para entidades de dominio compartidas (User, Group, Expense, Settlement, …). |
 | **FeatureFlags** | 🔴 Vacío | Reservado para flags de funcionalidad y experimentación. |
@@ -205,7 +205,7 @@ EquiPayApp
 - ✅ Navegación a **Login** y **Sign Up** desde el Onboarding (via
   `fullScreenCover`).
 - ✅ Cambio entre Login ↔ Sign Up dentro del flujo de Auth.
-- ✅ Vista **Home** con cards de resumen, gastos recientes y accesos rápidos.
+- ✅ Vista **Home** con cards de resumen, grupos recientes y acciones rápidas.
 - ✅ **TabBar** principal con 5 secciones definidas.
 - ✅ Componentes de Design System reutilizables.
 - ✅ Schemes y `.xcconfig` separados para Dev / Stage / Prod.

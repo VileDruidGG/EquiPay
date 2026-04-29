@@ -6,44 +6,43 @@
 //
 import SwiftUI
 
-
 public struct SummaryCard: View {
-    
+
     private let title: String
     private let amount: String
     private let icon: String
-    private let color: Color
-    
-   public init(title: String, amount: String, icon: String, color: Color) {
+
+    public init(title: String, amount: String, icon: String) {
         self.title = title
         self.amount = amount
         self.icon = icon
-        self.color = color
     }
-    
+
     public var body: some View {
-        VStack(alignment: .leading) {
-            Image(systemName: icon).foregroundColor(color)
-            GeometryReader { geometry in
-                Text(title)
-                    .lineLimit(nil)
-                    .frame(width: geometry.size.width, alignment: .leading)
-            }
-            .frame(height: 50)
+        VStack(alignment: .leading, spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundColor(.white)
+
+            Text(title)
+                .font(.caption)
+                .foregroundColor(Color.white.opacity(0.85))
+                .fixedSize(horizontal: false, vertical: true)
+
             Text(amount)
-                .font(.title).bold()
-            
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: 140, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.white, lineWidth: 1)
-                .background(
+                .fill(Color.white.opacity(0.18))
+                .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.white.opacity(0.2))
+                        .stroke(Color.white.opacity(0.35), lineWidth: 1)
                 )
         )
-        
     }
 }

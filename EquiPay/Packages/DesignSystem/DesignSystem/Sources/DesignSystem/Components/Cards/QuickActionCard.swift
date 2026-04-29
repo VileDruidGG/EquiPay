@@ -10,34 +10,46 @@ public struct QuickActionCard: View {
     private let title: String
     private let icon: String
     private let isPrincipal: Bool
-    
-    
+
     public init(title: String, icon: String, isPrincipal: Bool) {
         self.title = title
         self.icon = icon
         self.isPrincipal = isPrincipal
     }
-    
-    
+
     public var body: some View {
-        VStack{
-            Image(systemName: icon).foregroundColor(isPrincipal ? Color.white: Color.black)
-            Text(title).foregroundColor(isPrincipal ? Color.white: Color.black).bold()
+        VStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 22, weight: .medium))
+                .foregroundColor(isPrincipal ? .white : .primary)
+            Text(title)
+                .font(.subheadline)
+                .bold()
+                .foregroundColor(isPrincipal ? .white : .primary)
+                .multilineTextAlignment(.center)
         }
-        .padding()
-        .frame(width: 150, height: 100)
-        .background(RoundedRectangle(cornerRadius: 16)
-            .stroke(Color.gray.opacity(0.8), lineWidth: isPrincipal ? 0:1)
-            .background(RoundedRectangle(cornerRadius: 16)
-                .fill(isPrincipal ?
-                      AnyShapeStyle( LinearGradient(colors: [Color.mint, Color.purple],
-                                                    startPoint: .topLeading,
-                                                    endPoint: .bottomTrailing))
-                      : AnyShapeStyle( Color.white))
-            )
+        .frame(maxWidth: .infinity)
+        .frame(height: 110)
+        .background(
+            Group {
+                if isPrincipal {
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.mint, Color.purple],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                } else {
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color(.systemBackground))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                        )
+                }
+            }
         )
-        
-        
     }
-    
 }
