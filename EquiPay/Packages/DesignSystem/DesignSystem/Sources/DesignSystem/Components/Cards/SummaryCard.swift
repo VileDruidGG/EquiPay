@@ -34,7 +34,7 @@ public struct SummaryCard: View {
                 .bold()
                 .foregroundColor(.white)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: 80, alignment: .leading)
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 16)
