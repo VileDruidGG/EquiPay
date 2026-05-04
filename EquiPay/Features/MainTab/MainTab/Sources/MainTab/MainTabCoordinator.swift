@@ -7,6 +7,9 @@
 import SwiftUI
 import Home
 import Groups
+import CreateGroup
+import Activity
+import Profile
 
 @MainActor
 public struct MainTabCoordinator {
@@ -25,16 +28,16 @@ public struct MainTabCoordinator {
 
     @ViewBuilder
     public func makeAdd() -> some View {
-        Text("Crear")
+        CreateGroupView()
     }
 
     @ViewBuilder
     public func makeActivity() -> some View {
-        Text("Actividad")
+        ActivityView()
     }
 
     @ViewBuilder
     public func makeProfile() -> some View {
-        Text("Perfil")
+        ProfileView()
     }
 }

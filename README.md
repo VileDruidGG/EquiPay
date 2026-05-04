@@ -67,8 +67,7 @@ presentación. La elección busca paridad entre iOS y Android.
 ### Decisiones arquitectónicas clave
 
 1. **Modularización por feature + módulos compartidos.** Cada feature
-   (Onboarding, Auth, Home, Groups, MainTab, …) vive en su propio módulo. Esto se
-   mapea directamente:
+   (Onboarding, Auth, Home, Groups, CreateGroup, Activity, Profile, MainTab) vive en su propio módulo:
    - **iOS:** Swift Packages locales (SPM) bajo `Features/` y `Packages/`.
    - **Android (planeado):** módulos Gradle bajo `features/` y `core/`.
 
@@ -84,26 +83,20 @@ presentación. La elección busca paridad entre iOS y Android.
    AndroidX con `StateFlow`.
 
 4. **Coordinator pattern para navegación.** La navegación no la decide la View
-   ni el ViewModel: la decide un `Coordinator` que recibe callbacks
-   (`onLogin`, `onSuccess`, `onSignUpTap`, etc.). Esto desacopla los módulos
-   entre sí: una feature **no importa otra feature** para navegar a ella.
+   ni el ViewModel: la decide un `Coordinator` que recibe callbacks.
    - En iOS: `AppCoordinator`, `AuthCoordinator`, `MainTabCoordinator`.
-   - En Android: se replicará con `Navigator`/`NavController` y un coordinator
-     equivalente por flujo.
+   - En Android: se replicará con `Navigator`/`NavController`.
 
 5. **Contratos compartidos en módulos transversales.** Modelos de dominio,
    utilidades y feature flags viven en módulos sin dependencias de UI
-   (`SharedDomain`, `Core`, `FeatureFlags`) para que cualquier feature los
-   pueda consumir sin acoplarse.
+   (`SharedDomain`, `Core`, `FeatureFlags`).
 
 6. **Design System como módulo independiente.** Componentes visuales
-   reutilizables (botones, cards, inputs) viven en un módulo `DesignSystem`
-   sin lógica de negocio. El equivalente Android será otro módulo Compose
-   con los mismos componentes y la misma API pública.
+   reutilizables sin lógica de negocio. El equivalente Android será otro módulo
+   Compose con los mismos componentes y la misma API pública.
 
-7. **Inyección por constructor / closures.** Para evitar singletons y
-   facilitar testing, las dependencias se pasan en el `init`. Las features
-   reciben callbacks de navegación, no referencias a otras features.
+7. **Inyección por constructor / closures.** Las dependencias se pasan en el
+   `init`. Las features reciben callbacks de navegación, no referencias entre sí.
 
 ### Patrones de diseño aplicados
 
@@ -111,9 +104,9 @@ presentación. La elección busca paridad entre iOS y Android.
 |--------|--------------|-----------|
 | **MVVM** | Todas las vistas | Separar estado/lógica de UI |
 | **Coordinator** | `AppCoordinator`, `AuthCoordinator`, `MainTabCoordinator` | Centralizar navegación y desacoplar features |
-| **Container / Factory** | `AuthContainer.makeAuthRoot(...)` | Punto de entrada público de un módulo, oculta sus internals |
+| **Container / Factory** | `AuthContainer.makeAuthRoot(...)` | Punto de entrada público de un módulo |
 | **Dependency Injection (constructor)** | ViewModels, Coordinators | Testabilidad y desacople |
-| **Repository (planeado)** | Capa `data` por feature | Abstraer fuentes de datos remotas/locales |
+| **Repository (planeado)** | Capa `data` por feature | Abstraer fuentes de datos |
 
 ---
 
@@ -147,6 +140,9 @@ EquiPay/
 │   │   ├── Auth/
 │   │   ├── Home/
 │   │   ├── Groups/
+│   │   ├── CreateGroup/
+│   │   ├── Activity/
+│   │   ├── Profile/
 │   │   └── MainTab/
 │   │
 │   └── Packages/
@@ -167,34 +163,40 @@ EquiPay/
 
 | Módulo | Estado | Contenido actual |
 |--------|--------|-----------------|
-| **Onboarding** | 🟢 Implementado | Carrusel de 6 features con autoplay, indicadores tap-to-go, CTAs `Log in` / `Sign up`. Imágenes empaquetadas como recurso del package. |
-| **Auth** | 🟡 UI lista, sin lógica real | `LoginView`, `SignUpView`, `LoginViewModel`, `SignUpViewModel`, `AuthCoordinator`, `AuthContainer`, `AuthRoute`. Login/Signup hacen `print` y simulan éxito. |
-| **Home** | 🟡 UI con datos mock | Header con gradiente, saludo en español + subtítulo, botón de notificaciones, tres `SummaryCard` (te deben / debes / grupos activos), sección "Grupos recientes" con `ExpenseCard` (balance direccional verde/rojo, badges de estado en español) y sección "Acciones rápidas" con `QuickActionCard`. Sin datos reales. |
-| **Groups** | 🟡 UI con datos mock | Pantalla "Mis grupos" accesible desde el tab Grupos. Botón "Crear nuevo grupo" (gradiente teal→purple) que salta al tab Crear vía `Binding<Int>`. Lista de 5 grupos con `ExpenseCard`. Sin datos reales. |
-| **MainTab** | 🟡 Estructura conectada | `TabView` con 5 pestañas en español (Inicio, Grupos, Crear, Actividad, Perfil). Tab Grupos conectado a `GroupsView`. `MainTabViewModel` expone `selectedTabIndex: Int` para navegación entre tabs desde features hijas sin acoplamiento. |
+| **Onboarding** | 🟢 Implementado | Carrusel de 6 features con autoplay, indicadores tap-to-go, CTAs `Log in` / `Sign up`. |
+| **Auth** | 🟡 UI lista, sin lógica real | `LoginView`, `SignUpView`, `LoginViewModel`, `SignUpViewModel`, `AuthCoordinator`, `AuthContainer`, `AuthRoute`. |
+| **Home** | 🟡 UI con datos mock | Header gradiente, saludo en español, tres `SummaryCard`, sección "Grupos recientes" con `ExpenseCard` y sección "Acciones rápidas" con `QuickActionCard`. |
+| **Groups** | 🟡 UI con datos mock | Pantalla "Mis grupos". Botón "Crear nuevo grupo" que salta al tab Crear vía `Binding<Int>`. Lista de 5 grupos con `ExpenseCard`. |
+| **CreateGroup** | 🟡 UI con datos mock | Pantalla "Crear grupo" con selector de tipo: Vacaciones, Suscripción mensual (activos) y Evento único (badge "Próximamente", deshabilitado). `GroupType` enum con ícono, color y disponibilidad. |
+| **Activity** | 🟡 UI con datos mock | Pantalla "Actividad" con selector segmentado custom (Notificaciones / Historial) y 3 tarjetas mock. Historial pendiente de definición. |
+| **Profile** | 🟡 UI con datos mock | Pantalla "Mi perfil" con avatar+inicial, 3 stat cards, menú de opciones con íconos teal, botón Cerrar sesión (solo UI) y versión. |
+| **MainTab** | 🟡 Estructura completa | `TabView` con 5 pestañas en español, todas conectadas a su vista real. `MainTabViewModel` expone `selectedTabIndex: Int` para navegación entre tabs sin acoplamiento. |
 
 ### Packages (transversales)
 
 | Módulo | Estado | Propósito |
 |--------|--------|----------|
-| **DesignSystem** | 🟢 En uso | Componentes públicos: `PrimaryButton`, `SecondaryButton`, `GhostButton`, `SummaryCard`, `ExpenseCard` (con `ExpenseStatus` y `BalanceDirection`), `QuickActionCard`, `EmailInput`, `TextFields`. |
-| **Core** | 🔴 Vacío | Reservado para utilidades transversales (networking, logging, persistencia, extensions). |
-| **SharedDomain** | 🔴 Vacío | Reservado para entidades de dominio compartidas (User, Group, Expense, Settlement, …). |
-| **FeatureFlags** | 🔴 Vacío | Reservado para flags de funcionalidad y experimentación. |
+| **DesignSystem** | 🟢 En uso | `PrimaryButton`, `SecondaryButton`, `GhostButton`, `SummaryCard`, `ExpenseCard` (con `ExpenseStatus` y `BalanceDirection`), `QuickActionCard`, `EmailInput`, `TextFields`. |
+| **Core** | 🔴 Vacío | Utilidades transversales (networking, logging, persistencia, extensions). |
+| **SharedDomain** | 🔴 Vacío | Entidades de dominio compartidas (User, Group, Expense, Settlement). |
+| **FeatureFlags** | 🔴 Vacío | Flags de funcionalidad y experimentación. |
 
 ### Grafo de dependencias actual
 
 ```
 EquiPayApp
-   ├── Onboarding ──► DesignSystem
-   ├── Auth       ──► DesignSystem
+   ├── Onboarding   ──► DesignSystem
+   ├── Auth         ──► DesignSystem
    └── (futuro) MainTab ──► DesignSystem
-                            ├── Home   ──► DesignSystem
-                            └── Groups ──► DesignSystem
+                            ├── Home        ──► DesignSystem
+                            ├── Groups      ──► DesignSystem
+                            ├── CreateGroup ──► DesignSystem
+                            ├── Activity    ──► DesignSystem
+                            └── Profile     ──► DesignSystem
 ```
 
 > Las features **no se importan entre sí**: la coordinación se hace desde
-> `AppCoordinator` (o `EquiPayApp`) vía closures.
+> `AppCoordinator` / `MainTabCoordinator` vía closures y bindings.
 
 ---
 
@@ -207,23 +209,27 @@ EquiPayApp
 - ✅ Navegación a **Login** y **Sign Up** desde el Onboarding (via `fullScreenCover`).
 - ✅ Cambio entre Login ↔ Sign Up dentro del flujo de Auth.
 - ✅ Vista **Home** con cards de resumen, grupos recientes y accesos rápidos.
-- ✅ Vista **Grupos** con lista completa, botón "Crear nuevo grupo" y navegación al tab Crear.
-- ✅ **TabBar** principal con 5 secciones en español (Inicio, Grupos, Crear, Actividad, Perfil).
+- ✅ Vista **Grupos** con lista completa y botón "Crear nuevo grupo".
+- ✅ Vista **Crear grupo** con selector de tipo (Vacaciones, Suscripción mensual, Evento único próximamente).
+- ✅ Vista **Actividad** con selector segmentado custom (Notificaciones / Historial) y tarjetas mock.
+- ✅ Vista **Perfil** con avatar, stats, menú de opciones y botón de cierre de sesión.
+- ✅ **TabBar** principal con 5 secciones en español completamente conectadas.
 - ✅ Componentes de Design System reutilizables.
 - ✅ Schemes y `.xcconfig` separados para Dev / Stage / Prod.
 
 ### Pendiente / no implementado
 
-- ❌ Autenticación real (los VMs solo imprimen y llaman `onSuccess()`).
+- ❌ Autenticación real.
 - ❌ Backend / API.
-- ❌ Persistencia local (Core Data / SwiftData / Room).
+- ❌ Persistencia local.
 - ❌ Modelo de dominio (`User`, `Group`, `Expense`).
 - ❌ Crear / editar / eliminar grupos y gastos.
-- ❌ Cálculo de balances ("quién debe a quién").
+- ❌ Cálculo de balances.
 - ❌ Notificaciones push.
-- ❌ Pantallas Add, Actividad, Perfil.
 - ❌ Detalle de grupo al tocar una tarjeta.
-- ❌ Integración del `AppCoordinator` con `EquiPayApp` y la pantalla MainTab tras el flujo de Auth.
+- ❌ Formulario real de creación de grupo.
+- ❌ Historial en la pantalla Actividad (pendiente de definición).
+- ❌ Cablear `AppCoordinator` → `MainTabView` tras Auth.
 - ❌ Implementación Android (Kotlin / Jetpack Compose).
 - ❌ Tests unitarios y de UI con cobertura significativa.
 
@@ -239,23 +245,17 @@ EquiPayApp
 - **Min iOS:** 16.0; paquetes apuntan a iOS 17 como mínimo
 - **Arquitectura:** MVVM + Coordinator + módulos SPM
 
-### Android (planeado, todavía no creado)
+### Android (planeado)
 
 - **Lenguaje:** Kotlin
 - **UI:** Jetpack Compose + Material 3
-- **Gestión de módulos:** Gradle (Kotlin DSL) con módulos por feature
 - **Arquitectura:** MVVM (AndroidX `ViewModel` + `StateFlow`) + Coordinator/Navigator
-- **DI:** Hilt (a evaluar)
-- **Persistencia:** Room (a evaluar)
-- **Networking:** Retrofit + OkHttp + kotlinx.serialization (a evaluar)
+- **DI:** Hilt · **Persistencia:** Room · **Networking:** Retrofit + OkHttp
 - **Min SDK:** por definir (probablemente 24)
 
 ### Backend (planeado)
 
-- Aún sin definir. Dominios reservados:
-  - `https://dev.api.equipay.app`
-  - `https://stage.api.equipay.app`
-  - `https://api.equipay.app`
+- `https://dev.api.equipay.app` / `https://stage.api.equipay.app` / `https://api.equipay.app`
 
 ---
 
@@ -271,9 +271,9 @@ EquiPayApp
 
 ## 🧹 Higiene del repositorio
 
-**Lo que NO se commitea:** `xcuserdata/`, `*.xcuserstate`, `build/`, `DerivedData/`, `.build/`, `.swiftpm/`, `.gradle/`, `local.properties`, `*.jks`, `*.keystore`, `.env`, `secrets.xcconfig`, `GoogleService-Info.plist`, `google-services.json`.
+**No se commitea:** `xcuserdata/`, `*.xcuserstate`, `DerivedData/`, `.build/`, `.swiftpm/`, `.gradle/`, `local.properties`, `*.jks`, `*.keystore`, `.env`, `secrets.xcconfig`, `GoogleService-Info.plist`, `google-services.json`.
 
-**Lo que SÍ se commitea:** `Package.resolved`, schemes compartidos bajo `xcshareddata/xcschemes/`.
+**Sí se commitea:** `Package.resolved`, schemes bajo `xcshareddata/xcschemes/`.
 
 ---
 
@@ -285,8 +285,8 @@ cd EquiPay
 open EquiPay.xcodeproj
 ```
 
-1. Selecciona el scheme deseado (`EquiPay-Dev`, `EquiPay-Stage` o `EquiPay-Prod`).
-2. Elige un simulador o dispositivo con iOS 17+.
+1. Selecciona el scheme (`EquiPay-Dev`, `EquiPay-Stage` o `EquiPay-Prod`).
+2. Elige un simulador con iOS 17+.
 3. **Run** (⌘R).
 
 ---
@@ -295,17 +295,18 @@ open EquiPay.xcodeproj
 
 ### Corto plazo
 
-- [ ] Cablear `EquiPayApp` con `AppCoordinator` y mostrar `MainTabView` al finalizar Auth.
-- [ ] Pantalla de detalle de grupo al tocar una tarjeta en Groups.
-- [ ] Implementar pantalla **Add / Crear grupo** con formulario.
+- [ ] Cablear `EquiPayApp` → `MainTabView` al finalizar Auth.
+- [ ] Formulario real de creación de grupo (Vacaciones y Suscripción).
+- [ ] Detalle de grupo al tocar una tarjeta en Groups.
+- [ ] Definir e implementar Historial en pantalla Actividad.
 - [ ] Definir entidades base en `SharedDomain`: `User`, `Group`, `Expense`, `Settlement`.
 - [ ] Cobertura inicial de tests unitarios en ViewModels.
 
 ### Mediano plazo
 
-- [ ] Crear el repositorio Android con módulos espejo.
-- [ ] Definir el contrato de API (OpenAPI).
-- [ ] Implementar backend mínimo (auth + grupos + gastos).
+- [ ] Repositorio Android con módulos espejo.
+- [ ] Contrato de API (OpenAPI).
+- [ ] Backend mínimo (auth + grupos + gastos).
 - [ ] Sincronización online/offline.
 
 ### Largo plazo
@@ -314,15 +315,15 @@ open EquiPay.xcodeproj
 - [ ] Liquidación inteligente.
 - [ ] Categorías, gráficas y estadísticas.
 - [ ] Modo oscuro completo y accesibilidad.
-- [ ] CI/CD (GitHub Actions) para builds, tests y distribución.
+- [ ] CI/CD (GitHub Actions).
 
 ---
 
 ## 📐 Convenciones del repositorio
 
-- **README como fuente de verdad:** cada cambio implementado debe actualizar este README.
-- **Preview obligatorio:** toda implementación técnica debe presentarse como preview y requiere autorización explícita para hacer push.
-- **Paridad iOS ↔ Android:** cualquier decisión de arquitectura debe poder aplicarse en ambas plataformas.
+- **README como fuente de verdad:** cada cambio implementado actualiza este README.
+- **Preview obligatorio:** toda implementación técnica requiere preview y autorización explícita.
+- **Paridad iOS ↔ Android:** cada decisión de arquitectura debe poder aplicarse en ambas plataformas.
 - **Una feature = un módulo.** Las features no se importan entre sí.
 - **Sin secretos en el repo.**
 - **Archivos por usuario fuera del repo.**
