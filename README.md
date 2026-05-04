@@ -67,7 +67,7 @@ presentación. La elección busca paridad entre iOS y Android.
 ### Decisiones arquitectónicas clave
 
 1. **Modularización por feature + módulos compartidos.** Cada feature
-   (Onboarding, Auth, Home, MainTab, …) vive en su propio módulo. Esto se
+   (Onboarding, Auth, Home, Groups, MainTab, …) vive en su propio módulo. Esto se
    mapea directamente:
    - **iOS:** Swift Packages locales (SPM) bajo `Features/` y `Packages/`.
    - **Android (planeado):** módulos Gradle bajo `features/` y `core/`.
@@ -121,41 +121,42 @@ presentación. La elección busca paridad entre iOS y Android.
 
 ```
 EquiPay/
-├── EquiPay.xcodeproj/                    # Proyecto Xcode (workspace, schemes, configs)
+├── EquiPay.xcodeproj/
 │   └── xcshareddata/xcschemes/
 │       ├── EquiPay-Dev.xcscheme
 │       ├── EquiPay-Stage.xcscheme
 │       └── EquiPay-Prod.xcscheme
 │
-├── EquiPay/                              # App iOS
-│   ├── App/                              # Punto de entrada y configuración
-│   │   ├── EquiPayApp.swift              # @main (SwiftUI App)
+├── EquiPay/
+│   ├── App/
+│   │   ├── EquiPayApp.swift
 │   │   ├── Application/
-│   │   │   ├── AppCoordinator.swift      # Coordinator raíz (UIKit-based)
+│   │   │   ├── AppCoordinator.swift
 │   │   │   ├── AppDelegate.swift
 │   │   │   └── SceneDelegate.swift
-│   │   ├── Config/                       # xcconfig por entorno
+│   │   ├── Config/
 │   │   │   ├── Dev.xcconfig
 │   │   │   ├── Stage.xcconfig
 │   │   │   └── Prod.xcconfig
-│   │   ├── Resources/Assets.xcassets/    # Iconos, accent color, launch screen
+│   │   ├── Resources/Assets.xcassets/
 │   │   ├── LaunchScreen.storyboard
 │   │   └── Info.plist
 │   │
-│   ├── Features/                         # Módulos de feature (SPM locales)
-│   │   ├── Onboarding/                   # Carrusel + CTAs (login/signup)
-│   │   ├── Auth/                         # Login + SignUp + AuthCoordinator
-│   │   ├── Home/                         # Dashboard del usuario
-│   │   └── MainTab/                      # TabBar principal (5 tabs)
+│   ├── Features/
+│   │   ├── Onboarding/
+│   │   ├── Auth/
+│   │   ├── Home/
+│   │   ├── Groups/
+│   │   └── MainTab/
 │   │
-│   └── Packages/                         # Módulos transversales (SPM locales)
-│       ├── Core/                         # 🟡 Esqueleto, sin código aún
-│       ├── SharedDomain/                 # 🟡 Esqueleto, sin código aún
-│       ├── FeatureFlags/                 # 🟡 Esqueleto, sin código aún
-│       └── DesignSystem/                 # 🟢 Componentes UI reutilizables
+│   └── Packages/
+│       ├── Core/
+│       ├── SharedDomain/
+│       ├── FeatureFlags/
+│       └── DesignSystem/
 │
-├── EquiPayTests/                         # Unit tests del target principal
-└── EquiPayUITests/                       # UI tests del target principal
+├── EquiPayTests/
+└── EquiPayUITests/
 ```
 
 ---
@@ -169,7 +170,8 @@ EquiPay/
 | **Onboarding** | 🟢 Implementado | Carrusel de 6 features con autoplay, indicadores tap-to-go, CTAs `Log in` / `Sign up`. Imágenes empaquetadas como recurso del package. |
 | **Auth** | 🟡 UI lista, sin lógica real | `LoginView`, `SignUpView`, `LoginViewModel`, `SignUpViewModel`, `AuthCoordinator`, `AuthContainer`, `AuthRoute`. Login/Signup hacen `print` y simulan éxito. |
 | **Home** | 🟡 UI con datos mock | Header con gradiente, saludo en español + subtítulo, botón de notificaciones, tres `SummaryCard` (te deben / debes / grupos activos), sección "Grupos recientes" con `ExpenseCard` (balance direccional verde/rojo, badges de estado en español) y sección "Acciones rápidas" con `QuickActionCard`. Sin datos reales. |
-| **MainTab** | 🟡 Estructura básica | `TabView` con 5 pestañas (Home, Expenses, Add, History, Profile). Solo `Home` tiene contenido real; el resto son `Text("…")` placeholder. |
+| **Groups** | 🟡 UI con datos mock | Pantalla "Mis grupos" accesible desde el tab Grupos. Botón "Crear nuevo grupo" (gradiente teal→purple) que salta al tab Crear vía `Binding<Int>`. Lista de 5 grupos con `ExpenseCard`. Sin datos reales. |
+| **MainTab** | 🟡 Estructura conectada | `TabView` con 5 pestañas en español (Inicio, Grupos, Crear, Actividad, Perfil). Tab Grupos conectado a `GroupsView`. `MainTabViewModel` expone `selectedTabIndex: Int` para navegación entre tabs desde features hijas sin acoplamiento. |
 
 ### Packages (transversales)
 
@@ -187,7 +189,8 @@ EquiPayApp
    ├── Onboarding ──► DesignSystem
    ├── Auth       ──► DesignSystem
    └── (futuro) MainTab ──► DesignSystem
-                            └── Home ──► DesignSystem
+                            ├── Home   ──► DesignSystem
+                            └── Groups ──► DesignSystem
 ```
 
 > Las features **no se importan entre sí**: la coordinación se hace desde
@@ -200,31 +203,27 @@ EquiPayApp
 ### Implementado y navegable
 
 - ✅ Splash / Launch Screen con icono de la app.
-- ✅ Pantalla de **Onboarding** con carrusel automático e indicadores
-  tappables.
-- ✅ Navegación a **Login** y **Sign Up** desde el Onboarding (via
-  `fullScreenCover`).
+- ✅ Pantalla de **Onboarding** con carrusel automático e indicadores tappables.
+- ✅ Navegación a **Login** y **Sign Up** desde el Onboarding (via `fullScreenCover`).
 - ✅ Cambio entre Login ↔ Sign Up dentro del flujo de Auth.
-- ✅ Vista **Home** con cards de resumen, grupos recientes y acciones rápidas.
-- ✅ **TabBar** principal con 5 secciones definidas.
+- ✅ Vista **Home** con cards de resumen, grupos recientes y accesos rápidos.
+- ✅ Vista **Grupos** con lista completa, botón "Crear nuevo grupo" y navegación al tab Crear.
+- ✅ **TabBar** principal con 5 secciones en español (Inicio, Grupos, Crear, Actividad, Perfil).
 - ✅ Componentes de Design System reutilizables.
 - ✅ Schemes y `.xcconfig` separados para Dev / Stage / Prod.
 
 ### Pendiente / no implementado
 
 - ❌ Autenticación real (los VMs solo imprimen y llaman `onSuccess()`).
-- ❌ Backend / API (las URLs de `API_BASE_URL` apuntan a dominios aún no
-  existentes).
+- ❌ Backend / API.
 - ❌ Persistencia local (Core Data / SwiftData / Room).
 - ❌ Modelo de dominio (`User`, `Group`, `Expense`).
 - ❌ Crear / editar / eliminar grupos y gastos.
 - ❌ Cálculo de balances ("quién debe a quién").
 - ❌ Notificaciones push.
-- ❌ Pantallas Expenses, Add, History, Profile.
-- ❌ Integración del `AppCoordinator` con `EquiPayApp` y la pantalla MainTab
-  tras el flujo de Auth (actualmente `EquiPayApp` cierra el sheet sin navegar
-  a MainTab; `AppCoordinator` ya prevé `showMainApp()` pero usa un placeholder
-  UIKit).
+- ❌ Pantallas Add, Actividad, Perfil.
+- ❌ Detalle de grupo al tocar una tarjeta.
+- ❌ Integración del `AppCoordinator` con `EquiPayApp` y la pantalla MainTab tras el flujo de Auth.
 - ❌ Implementación Android (Kotlin / Jetpack Compose).
 - ❌ Tests unitarios y de UI con cobertura significativa.
 
@@ -237,8 +236,7 @@ EquiPayApp
 - **Lenguaje:** Swift 6.1
 - **UI:** SwiftUI (con interop puntual de UIKit en `AppCoordinator`)
 - **Gestión de paquetes:** Swift Package Manager (SPM) con paquetes locales
-- **Min iOS:** 16.0 (`MinimumOSVersion` en `Info.plist`); paquetes apuntan a
-  iOS 17 como mínimo
+- **Min iOS:** 16.0; paquetes apuntan a iOS 17 como mínimo
 - **Arquitectura:** MVVM + Coordinator + módulos SPM
 
 ### Android (planeado, todavía no creado)
@@ -254,7 +252,7 @@ EquiPayApp
 
 ### Backend (planeado)
 
-- Aún sin definir. Dominios reservados visibles en xcconfigs:
+- Aún sin definir. Dominios reservados:
   - `https://dev.api.equipay.app`
   - `https://stage.api.equipay.app`
   - `https://api.equipay.app`
@@ -263,68 +261,23 @@ EquiPayApp
 
 ## 🧪 Configuración por entornos
 
-El proyecto define tres entornos, cada uno con su `.xcconfig` y su scheme:
-
 | Entorno | Scheme | `API_BASE_URL` | `APP_ENV` |
 |---------|--------|---------------|-----------|
 | Dev | `EquiPay-Dev` | `https://dev.api.equipay.app` | `DEV` |
 | Stage | `EquiPay-Stage` | `https://stage.api.equipay.app` | `STAGE` |
 | Prod | `EquiPay-Prod` | `https://api.equipay.app` | `PROD` |
 
-Estas variables se exponen en `Info.plist` como `API_BASE_URL` y `APP_ENV` y
-podrán leerse desde el código una vez se implemente la capa de configuración
-en el módulo `Core`.
-
-> En Android se replicará el mismo esquema usando **buildTypes** y/o
-> **product flavors** de Gradle, exponiendo las mismas variables vía
-> `BuildConfig`.
-
 ---
 
 ## 🧹 Higiene del repositorio
 
-El repo tiene un `.gitignore` raíz que cubre tanto iOS/Xcode como
-Android/Gradle (preparado para cuando se agregue el módulo Android), además
-de los secretos que nunca deben commitearse.
+**Lo que NO se commitea:** `xcuserdata/`, `*.xcuserstate`, `build/`, `DerivedData/`, `.build/`, `.swiftpm/`, `.gradle/`, `local.properties`, `*.jks`, `*.keystore`, `.env`, `secrets.xcconfig`, `GoogleService-Info.plist`, `google-services.json`.
 
-**Lo que NO se commitea:**
-
-- `xcuserdata/`, `*.xcuserstate`, breakpoints y schemes personales — son
-  archivos por usuario que Xcode regenera automáticamente al abrir el
-  proyecto.
-- `build/`, `DerivedData/`, `.build/`, `.swiftpm/` — artefactos de build de
-  Xcode y SPM.
-- `Pods/`, `Carthage/Build/` — por si en el futuro se integran (con CocoaPods
-  el `Podfile.lock` SÍ se commitea).
-- `.gradle/`, `local.properties`, `**/build/`, `*.jks`, `*.keystore`,
-  `keystore.properties` — equivalentes para Android.
-- `.env`, `.env.*`, `secrets.xcconfig`, `*.private.xcconfig`,
-  `GoogleService-Info.plist`, `google-services.json` — credenciales y
-  configuración local.
-
-**Lo que SÍ se commitea:**
-
-- `Package.resolved` (cuando exista) — fija las versiones de dependencias
-  SPM para builds reproducibles.
-- Schemes compartidos bajo `xcshareddata/xcschemes/` — son del proyecto, no
-  del usuario.
-
-**Patrón de secretos:** cuando se necesite consumir API keys o credenciales,
-se creará un `secrets.xcconfig` local (ignorado) que se incluye desde los
-xcconfig por entorno con `#include? "secrets.xcconfig"`. Habrá un
-`secrets.example.xcconfig` (sí trackeado) como plantilla. En Android se
-seguirá el mismo patrón con `local.properties` + `BuildConfig`.
+**Lo que SÍ se commitea:** `Package.resolved`, schemes compartidos bajo `xcshareddata/xcschemes/`.
 
 ---
 
 ## ▶️ Cómo correr el proyecto (iOS)
-
-### Requisitos
-
-- macOS con **Xcode 16** o superior
-- iOS Simulator con iOS 17+ (o un dispositivo físico con iOS 16+)
-
-### Pasos
 
 ```bash
 git clone https://github.com/VileDruidGG/EquiPay.git
@@ -332,13 +285,9 @@ cd EquiPay
 open EquiPay.xcodeproj
 ```
 
-1. En Xcode, selecciona el scheme deseado (`EquiPay-Dev`, `EquiPay-Stage` o
-   `EquiPay-Prod`).
-2. Elige un simulador o dispositivo.
+1. Selecciona el scheme deseado (`EquiPay-Dev`, `EquiPay-Stage` o `EquiPay-Prod`).
+2. Elige un simulador o dispositivo con iOS 17+.
 3. **Run** (⌘R).
-
-> La primera build puede tardar más de lo habitual mientras Xcode resuelve
-> los Swift Packages locales.
 
 ---
 
@@ -346,59 +295,37 @@ open EquiPay.xcodeproj
 
 ### Corto plazo
 
-- [ ] Cablear `EquiPayApp` con `AppCoordinator` y mostrar `MainTabView` al
-      finalizar Auth.
-- [ ] Crear `AuthService` real (mock en memoria primero) en `Core` o módulo
-      propio `AuthData`.
-- [ ] Definir entidades base en `SharedDomain`: `User`, `Group`, `Expense`,
-      `Settlement`.
-- [ ] Implementar pantalla **Add Expense** y persistencia local.
-- [ ] Cobertura inicial de tests unitarios en ViewModels y reglas de negocio.
+- [ ] Cablear `EquiPayApp` con `AppCoordinator` y mostrar `MainTabView` al finalizar Auth.
+- [ ] Pantalla de detalle de grupo al tocar una tarjeta en Groups.
+- [ ] Implementar pantalla **Add / Crear grupo** con formulario.
+- [ ] Definir entidades base en `SharedDomain`: `User`, `Group`, `Expense`, `Settlement`.
+- [ ] Cobertura inicial de tests unitarios en ViewModels.
 
 ### Mediano plazo
 
-- [ ] Crear el repositorio Android con módulos espejo (`features/auth`,
-      `features/onboarding`, `features/home`, `core/design-system`,
-      `core/shared-domain`, …).
-- [ ] Definir el contrato de API (OpenAPI) para que iOS y Android lo
-      consuman idénticamente.
+- [ ] Crear el repositorio Android con módulos espejo.
+- [ ] Definir el contrato de API (OpenAPI).
 - [ ] Implementar backend mínimo (auth + grupos + gastos).
 - [ ] Sincronización online/offline.
 
 ### Largo plazo
 
 - [ ] Notificaciones push (APNs + FCM).
-- [ ] Liquidación inteligente (algoritmo que minimiza número de
-      transferencias).
+- [ ] Liquidación inteligente.
 - [ ] Categorías, gráficas y estadísticas.
-- [ ] Modo oscuro completo y revisión de accesibilidad.
-- [ ] CI/CD (GitHub Actions) para builds, tests y distribución (TestFlight /
-      Play Internal).
+- [ ] Modo oscuro completo y accesibilidad.
+- [ ] CI/CD (GitHub Actions) para builds, tests y distribución.
 
 ---
 
 ## 📐 Convenciones del repositorio
 
-- **README como fuente de verdad:** cada cambio implementado debe actualizar
-  este README (estado de módulos, features, roadmap o stack según
-  corresponda).
-- **Preview obligatorio:** toda implementación técnica (código, BD,
-  configuración, etc.) debe presentarse como preview de los cambios antes de
-  publicarse al repo, y requiere autorización explícita para hacer push.
-- **Paridad iOS ↔ Android:** cualquier decisión de arquitectura, patrón o
-  nombre público de módulo debe poder aplicarse en ambas plataformas. Si una
-  decisión solo funciona en una, se documenta el motivo y la alternativa en
-  la otra.
-- **Una feature = un módulo.** Las features no se importan entre sí; se
-  comunican vía coordinators y contratos en `SharedDomain`.
-- **Sin secretos en el repo.** API keys, credenciales y archivos `.env`,
-  `secrets.xcconfig`, `GoogleService-Info.plist`, `google-services.json` o
-  `keystore` están explícitamente ignorados. Si necesitas configuración
-  local, sigue el patrón de `secrets.xcconfig` documentado en
-  [Higiene del repositorio](#-higiene-del-repositorio).
-- **Archivos por usuario fuera del repo.** `xcuserdata/`, breakpoints y
-  schemes personales nunca se commitean — Xcode los regenera al abrir el
-  proyecto.
+- **README como fuente de verdad:** cada cambio implementado debe actualizar este README.
+- **Preview obligatorio:** toda implementación técnica debe presentarse como preview y requiere autorización explícita para hacer push.
+- **Paridad iOS ↔ Android:** cualquier decisión de arquitectura debe poder aplicarse en ambas plataformas.
+- **Una feature = un módulo.** Las features no se importan entre sí.
+- **Sin secretos en el repo.**
+- **Archivos por usuario fuera del repo.**
 
 ---
 

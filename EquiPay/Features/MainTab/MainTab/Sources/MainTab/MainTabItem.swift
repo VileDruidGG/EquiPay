@@ -13,27 +13,27 @@ public enum MainTabItem: Hashable {
     case add
     case history
     case profile
-    
+
     var title: String {
         switch self {
-        case .home: return "Home"
-        case .expenses: return "Expenses"
-        case .add: return "Add"
-        case .history: return "History"
-        case .profile: return "Profile"
+        case .home:     return "Inicio"
+        case .expenses: return "Grupos"
+        case .add:      return "Crear"
+        case .history:  return "Actividad"
+        case .profile:  return "Perfil"
         }
     }
-    
+
     var systemImageName: String {
         switch self {
-        case .home: return "house"
-        case .expenses: return "cart.fill"
-        case .add: return "plus"
-        case .history: return "clock"
-        case .profile: return "person"
+        case .home:     return "house"
+        case .expenses: return "person.2"
+        case .add:      return "plus"
+        case .history:  return "bell"
+        case .profile:  return "person"
         }
     }
-    
+
     @ViewBuilder
     var icon: some View {
         Image(systemName: systemImageName)

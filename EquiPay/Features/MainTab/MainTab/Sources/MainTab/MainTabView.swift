@@ -29,27 +29,30 @@ public struct MainTabView: View {
                 }
                 .tag(MainTabItem.home)
 
-            coordinator.makeExpenses()
+            coordinator.makeGroups(selectedTab: Binding(
+                get: { viewModel.selectedTabIndex },
+                set: { viewModel.selectedTabIndex = $0 }
+            ))
                 .tabItem {
                     MainTabItem.expenses.icon
                     Text(MainTabItem.expenses.title)
                 }
                 .tag(MainTabItem.expenses)
-            
+
             coordinator.makeAdd()
                 .tabItem {
                     MainTabItem.add.icon
                     Text(MainTabItem.add.title)
                 }
                 .tag(MainTabItem.add)
-            
-            coordinator.makeHistory()
+
+            coordinator.makeActivity()
                 .tabItem {
                     MainTabItem.history.icon
                     Text(MainTabItem.history.title)
                 }
                 .tag(MainTabItem.history)
-            
+
             coordinator.makeProfile()
                 .tabItem {
                     MainTabItem.profile.icon
@@ -57,12 +60,10 @@ public struct MainTabView: View {
                 }
                 .tag(MainTabItem.profile)
         }
-        .tint(Color.green)
+        .tint(Color(red: 0.24, green: 0.78, blue: 0.75))
     }
 }
 
 #Preview {
     MainTabView()
 }
-
-

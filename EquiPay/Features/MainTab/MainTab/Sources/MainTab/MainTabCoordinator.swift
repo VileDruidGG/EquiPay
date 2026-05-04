@@ -6,37 +6,35 @@
 //
 import SwiftUI
 import Home
-
+import Groups
 
 @MainActor
 public struct MainTabCoordinator {
-    
+
     public init() {}
-    
+
     @ViewBuilder
     public func makeHome() -> some View {
         HomeView()
     }
-    
+
     @ViewBuilder
-    public func makeExpenses() -> some View {
-        Text("Expenses")
+    public func makeGroups(selectedTab: Binding<Int>) -> some View {
+        GroupsView(selectedTab: selectedTab)
     }
-    
+
     @ViewBuilder
     public func makeAdd() -> some View {
-        Text("Add")
+        Text("Crear")
     }
-    
+
     @ViewBuilder
-    public func makeHistory() -> some View {
-        Text("Profile")
+    public func makeActivity() -> some View {
+        Text("Actividad")
     }
-    
+
     @ViewBuilder
     public func makeProfile() -> some View {
-        Text("Profile")
+        Text("Perfil")
     }
-    
-    
 }
