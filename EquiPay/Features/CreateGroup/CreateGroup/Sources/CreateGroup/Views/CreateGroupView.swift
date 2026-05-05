@@ -100,8 +100,8 @@ public struct CreateGroupView: View {
         .ignoresSafeArea(edges: .top)
         .sheet(isPresented: $showSubscriptionSheet) {
             CreateSubscriptionSheet(isPresented: $showSubscriptionSheet)
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
+                .presentationDetents([PresentationDetent.large])
+                .presentationDragIndicator(Visibility.visible)
         }
     }
 
@@ -143,7 +143,6 @@ private struct GroupTypeRow: View {
                         Text("\(type.emoji) \(type.title)")
                             .font(.headline)
                             .foregroundColor(type.isAvailable ? .primary : Color.gray)
-
                         if !type.isAvailable {
                             Text("Próximamente")
                                 .font(.caption).bold().foregroundColor(Color.orange)

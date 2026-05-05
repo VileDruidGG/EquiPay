@@ -32,8 +32,9 @@ enum ReminderDays: Int, CaseIterable {
 /// Sheet de creación de suscripción en 5 pasos.
 /// Se presenta desde CreateGroupView al tocar "Suscripción mensual".
 /// Android equivalent: ModalBottomSheet con un NavHost interno de 5 destinos.
-struct CreateSubscriptionSheet: View {
+public struct CreateSubscriptionSheet: View {
 
+    // Cierra el sheet desde el exterior
     @Binding var isPresented: Bool
 
     // MARK: Estado de navegación
@@ -66,7 +67,7 @@ struct CreateSubscriptionSheet: View {
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             sheetHeader
             progressBar
@@ -210,8 +211,6 @@ struct CreateSubscriptionSheet: View {
 
     // MARK: - Validación por paso
 
-    /// Indica si el paso actual está completo para habilitar "Continuar".
-    /// Android equivalent: val currentStepIsValid: StateFlow<Boolean>
     private var currentStepIsValid: Bool {
         switch currentStep {
         case 1:
@@ -304,7 +303,6 @@ struct CreateSubscriptionSheet: View {
                             RoundedRectangle(cornerRadius: 12)
                                 .stroke(emailError != nil ? Color.red.opacity(0.6) : Color.gray.opacity(0.25), lineWidth: 1.5)
                         )
-
                     Button { addMember() } label: {
                         Image(systemName: "plus").font(.body.bold()).foregroundColor(.white)
                             .frame(width: 46, height: 46)
@@ -390,9 +388,7 @@ struct CreateSubscriptionSheet: View {
                                     get: { manualAmounts[email, default: ""] },
                                     set: { manualAmounts[email] = $0 }
                                 ))
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .frame(width: 70)
+                                .keyboardType(.decimalPad).multilineTextAlignment(.trailing).frame(width: 70)
                             }
                             .padding(.horizontal, 12).padding(.vertical, 10)
                             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.25), lineWidth: 1))
@@ -414,10 +410,10 @@ struct CreateSubscriptionSheet: View {
 
     private var step4Banking: some View {
         VStack(alignment: .leading, spacing: 16) {
-            bankingField(label: "Banco",                          placeholder: "BBVA",       text: $bankName)
-            bankingField(label: "Titular de la cuenta",           placeholder: "Diego Flores", text: $accountHolder)
-            bankingField(label: "CLABE / Nº de cuenta",           placeholder: "18 dígitos", text: $clabe,      keyboard: .numberPad)
-            bankingField(label: "Número de tarjeta (opcional)",   placeholder: "16 dígitos", text: $cardNumber, keyboard: .numberPad, isOptional: true)
+            bankingField(label: "Banco",                        placeholder: "BBVA",         text: $bankName)
+            bankingField(label: "Titular de la cuenta",         placeholder: "Diego Flores", text: $accountHolder)
+            bankingField(label: "CLABE / Nº de cuenta",         placeholder: "18 dígitos",   text: $clabe,      keyboard: .numberPad)
+            bankingField(label: "Número de tarjeta (opcional)", placeholder: "16 dígitos",   text: $cardNumber, keyboard: .numberPad, isOptional: true)
         }
     }
 
@@ -427,46 +423,38 @@ struct CreateSubscriptionSheet: View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Mensaje personalizado").font(.subheadline.bold())
-
                 ZStack(alignment: .bottomTrailing) {
                     TextEditor(text: $reminderMessage)
-                        .frame(minHeight: 100)
-                        .padding(10)
+                        .frame(minHeight: 100).padding(10)
                         .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.25), lineWidth: 1.5))
                         .onChange(of: reminderMessage) { _, new in
                             if new.count > 200 { reminderMessage = String(new.prefix(200)) }
                         }
-                        .overlay(
-                            Group {
-                                if reminderMessage.isEmpty {
-                                    Text("¡Hola! Recuerda tu pago de Netflix 💜")
-                                        .foregroundColor(Color.gray.opacity(0.5)).font(.body)
-                                        .padding(16)
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                                        .allowsHitTesting(false)
-                                }
+                        .overlay(Group {
+                            if reminderMessage.isEmpty {
+                                Text("¡Hola! Recuerda tu pago de Netflix 💜")
+                                    .foregroundColor(Color.gray.opacity(0.5)).font(.body).padding(16)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                    .allowsHitTesting(false)
                             }
-                        )
+                        })
                     Text("\(reminderMessage.count)/200").font(.caption).foregroundColor(.secondary).padding(10)
                 }
             }
 
             VStack(alignment: .leading, spacing: 12) {
                 Text("Días de anticipación").font(.subheadline.bold())
-
                 FlowLayout(spacing: 10) {
                     ForEach(ReminderDays.allCases, id: \.rawValue) { days in
                         Button(days.label) { selectedReminderDays = days }
                             .font(.subheadline.bold())
                             .foregroundColor(selectedReminderDays == days ? .white : .primary)
                             .padding(.horizontal, 16).padding(.vertical, 10)
-                            .background(
-                                Capsule().fill(
-                                    selectedReminderDays == days
-                                        ? Color(red: 0.24, green: 0.78, blue: 0.75)
-                                        : Color(.systemGroupedBackground)
-                                )
-                            )
+                            .background(Capsule().fill(
+                                selectedReminderDays == days
+                                    ? Color(red: 0.24, green: 0.78, blue: 0.75)
+                                    : Color(.systemGroupedBackground)
+                            ))
                     }
                 }
             }
@@ -479,11 +467,9 @@ struct CreateSubscriptionSheet: View {
         Button {
             withAnimation(.easeInOut(duration: 0.15)) { splitMode = mode }
         } label: {
-            Text(title)
-                .font(.subheadline.bold())
+            Text(title).font(.subheadline.bold())
                 .foregroundColor(splitMode == mode ? .primary : Color.gray)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity).padding(.vertical, 10)
                 .background(Group {
                     if splitMode == mode {
                         Capsule().fill(Color.white)
