@@ -34,7 +34,6 @@ enum ReminderDays: Int, CaseIterable {
 /// Android equivalent: ModalBottomSheet con un NavHost interno de 5 destinos.
 public struct CreateSubscriptionSheet: View {
 
-    // Cierra el sheet desde el exterior
     @Binding var isPresented: Bool
 
     // MARK: Estado de navegación
@@ -367,8 +366,8 @@ public struct CreateSubscriptionSheet: View {
             if splitMode == .equal {
                 let cost = Double(monthlyCost.replacingOccurrences(of: ",", with: ".")) ?? 0
                 let perPerson = members.isEmpty ? 0 : cost / Double(members.count)
-                Text("Cada miembro paga \(perPerson, format: .currency(code: "MXN").precision(.fractionLength(2)))"
-                    .replacingOccurrences(of: "MX$", with: "$"))
+                // String(format:) evita depender de Foundation explícito en SPM
+                Text("Cada miembro paga $\(String(format: "%.2f", perPerson))")
                     .font(.subheadline).foregroundColor(.secondary)
             } else {
                 let cost = Double(monthlyCost.replacingOccurrences(of: ",", with: ".")) ?? 0
@@ -395,8 +394,7 @@ public struct CreateSubscriptionSheet: View {
                         }
                     }
                     HStack {
-                        Text("Suma: \(total, format: .currency(code: "MXN").precision(.fractionLength(2))) / \(cost, format: .currency(code: "MXN").precision(.fractionLength(2)))"
-                            .replacingOccurrences(of: "MX$", with: "$"))
+                        Text("Suma: $\(String(format: "%.2f", total)) / $\(String(format: "%.2f", cost))")
                             .font(.caption.bold())
                             .foregroundColor(isComplete ? Color(red: 0.24, green: 0.78, blue: 0.75) : .red)
                         Spacer()
@@ -432,7 +430,7 @@ public struct CreateSubscriptionSheet: View {
                         }
                         .overlay(Group {
                             if reminderMessage.isEmpty {
-                                Text("¡Hola! Recuerda tu pago de Netflix 💜")
+                                Text("Ej. ¡Hola! Recuerda tu pago de Netflix 💜")
                                     .foregroundColor(Color.gray.opacity(0.5)).font(.body).padding(16)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                                     .allowsHitTesting(false)
