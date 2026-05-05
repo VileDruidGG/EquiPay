@@ -96,7 +96,7 @@ EquiPay/
 │   │   ├── Auth/
 │   │   ├── Home/          ← importa Groups (deuda técnica temporal)
 │   │   ├── Groups/        ← incluye GroupDetailView
-│   │   ├── CreateGroup/
+│   │   ├── CreateGroup/   ← incluye CreateSubscriptionSheet (5 pasos)
 │   │   ├── Activity/
 │   │   ├── Profile/
 │   │   └── MainTab/
@@ -121,7 +121,7 @@ EquiPay/
 | **Auth** | 🟡 UI lista, sin lógica real | `LoginView`, `SignUpView`, ViewModels, `AuthCoordinator`, `AuthContainer`. |
 | **Home** | 🟡 UI con datos mock | Header gradiente, `SummaryCard`, `ExpenseCard`, `QuickActionCard`. YouTube Premium navega a `GroupDetailView` vía `NavigationLink`. |
 | **Groups** | 🟡 UI con datos mock | `GroupsView`: lista con `GroupCategory` enum. Suscripciones navegan a `GroupDetailView`. `GroupDetailView`: stat cards, miembros con badges (Pagado/Pendiente/Atrasado), pagos por confirmar (Confirmar/Rechazar solo UI), acciones rápidas, link historial. |
-| **CreateGroup** | 🟡 UI con datos mock | Selector de tipo: Vacaciones, Suscripción mensual (activos), Evento único ("Próximamente", deshabilitado). |
+| **CreateGroup** | 🟡 UI funcional (sin backend) | Pantalla "Crear grupo" con selector de tipo. **Suscripción mensual** abre `CreateSubscriptionSheet`: flujo de 5 pasos con navegación real, validación por paso y botón "Crear grupo" deshabilitado hasta completar todo. Pasos: Servicio (nombre + costo + día cobro) → Miembros (correo con validación @ y punto, lista editable) → División (partes iguales o manual con validación de suma) → Datos bancarios (banco + titular + CLABE obligatorios, tarjeta opcional) → Recordatorios (mensaje 0/200 + selector de días con `FlowLayout`). |
 | **Activity** | 🟡 UI con datos mock | Selector segmentado custom. **Notificaciones:** 3 tarjetas. **Historial:** `HistorySection` por mes, `HistoryItem` con tipo (saliente=rojo, entrante=verde, evento=purple), subtítulo `grupo·fecha` y monto. |
 | **Profile** | 🟡 UI con datos mock | Avatar+inicial, 3 stat cards, menú teal, Cerrar sesión (solo UI), versión. |
 | **MainTab** | 🟡 Estructura completa | 5 pestañas en español conectadas. `selectedTabIndex: Int` para navegación entre tabs. |
@@ -165,6 +165,7 @@ EquiPayApp
 - ✅ Grupos: lista completa, botón crear grupo, navegación al detalle para suscripciones.
 - ✅ Detalle de grupo: stat cards, estado de miembros, pagos por confirmar, acciones rápidas.
 - ✅ Crear grupo: selector de tipo con Próximamente en Evento único.
+- ✅ **Flujo de creación de suscripción** en 5 pasos con navegación real y validación por paso.
 - ✅ Actividad: Notificaciones y Historial agrupado por mes.
 - ✅ Perfil: avatar, stats, menú, cerrar sesión.
 - ✅ TabBar con 5 secciones en español completamente conectadas.
@@ -176,10 +177,10 @@ EquiPayApp
 - Autenticación real y cablear AppCoordinator → MainTabView.
 - Backend / API / persistencia local.
 - Modelo de dominio en SharedDomain.
+- Resolver deuda técnica Home → Groups.
 - Crear / editar / eliminar grupos y gastos.
 - Cálculo de balances.
 - Notificaciones push.
-- Formulario real de creación de grupo.
 - Android (Kotlin / Jetpack Compose).
 - Tests unitarios y de UI.
 
@@ -234,10 +235,10 @@ open EquiPay.xcodeproj
 
 ### Corto plazo
 - [ ] Cablear `AppCoordinator` → `MainTabView` al finalizar Auth.
-- [ ] Mover `GroupDetailView` a `SharedDomain` para resolver deuda técnica Home→Groups.
-- [ ] Formulario real de creación de grupo.
+- [ ] Mover `GroupDetailView` a `SharedDomain` (resolver deuda técnica).
+- [ ] Conectar flujo de creación de suscripción con el modelo de dominio.
 - [ ] Definir entidades base en `SharedDomain`.
-- [ ] Tests unitarios en ViewModels.
+- [ ] Tests unitarios en ViewModels y validaciones.
 
 ### Mediano plazo
 - [ ] Repositorio Android con módulos espejo.

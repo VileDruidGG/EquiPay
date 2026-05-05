@@ -61,7 +61,6 @@ public enum GroupType: CaseIterable {
         }
     }
 
-    /// Si es false, la fila aparece deshabilitada con badge "Próximamente"
     var isAvailable: Bool {
         switch self {
         case .vacation, .subscription: return true
@@ -72,6 +71,8 @@ public enum GroupType: CaseIterable {
 
 public struct CreateGroupView: View {
 
+    @State private var showSubscriptionSheet = false
+
     public init() {}
 
     public var body: some View {
@@ -81,7 +82,11 @@ public struct CreateGroupView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 12) {
                     ForEach(GroupType.allCases, id: \.title) { type in
-                        GroupTypeRow(type: type)
+                        GroupTypeRow(type: type) {
+                            if type == .subscription {
+                                showSubscriptionSheet = true
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, 16)
@@ -93,49 +98,45 @@ public struct CreateGroupView: View {
         }
         .background(Color(.systemGroupedBackground))
         .ignoresSafeArea(edges: .top)
+        .sheet(isPresented: $showSubscriptionSheet) {
+            CreateSubscriptionSheet(isPresented: $showSubscriptionSheet)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
     }
 
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Crear grupo")
-                .font(.largeTitle)
-                .bold()
-                .foregroundColor(.white)
-
+                .font(.largeTitle).bold().foregroundColor(.white)
             Text("Elige el tipo de grupo que quieres crear ✨")
-                .font(.subheadline)
-                .foregroundColor(Color.white.opacity(0.9))
+                .font(.subheadline).foregroundColor(Color.white.opacity(0.9))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 60)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 28)
+        .padding(.top, 60).padding(.horizontal, 20).padding(.bottom, 28)
         .background(
             LinearGradient(
                 colors: [Color(red: 0.24, green: 0.78, blue: 0.75), Color.purple],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+                startPoint: .topLeading, endPoint: .bottomTrailing
             )
         )
     }
 }
 
+// MARK: - Fila de tipo de grupo
+
 private struct GroupTypeRow: View {
     let type: GroupType
+    let onTap: () -> Void
 
     var body: some View {
-        Button {
-            // Sin acción por ahora — solo UI
-        } label: {
+        Button { onTap() } label: {
             HStack(spacing: 14) {
                 Image(systemName: type.iconName)
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(type.isAvailable ? type.iconForeground : Color.orange.opacity(0.5))
                     .frame(width: 46, height: 46)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(type.iconBackground.opacity(type.isAvailable ? 1 : 0.5))
-                    )
+                    .background(RoundedRectangle(cornerRadius: 14).fill(type.iconBackground.opacity(type.isAvailable ? 1 : 0.5)))
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 8) {
@@ -145,18 +146,11 @@ private struct GroupTypeRow: View {
 
                         if !type.isAvailable {
                             Text("Próximamente")
-                                .font(.caption)
-                                .bold()
-                                .foregroundColor(Color.orange)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 3)
-                                .background(
-                                    Capsule()
-                                        .fill(Color.orange.opacity(0.12))
-                                )
+                                .font(.caption).bold().foregroundColor(Color.orange)
+                                .padding(.horizontal, 8).padding(.vertical, 3)
+                                .background(Capsule().fill(Color.orange.opacity(0.12)))
                         }
                     }
-
                     Text(type.description)
                         .font(.subheadline)
                         .foregroundColor(type.isAvailable ? .secondary : Color.gray.opacity(0.6))
@@ -171,17 +165,12 @@ private struct GroupTypeRow: View {
                         .foregroundColor(Color.gray.opacity(0.4))
                 }
             }
-            .padding(16)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16).frame(maxWidth: .infinity, alignment: .leading)
             .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(.systemBackground))
+                RoundedRectangle(cornerRadius: 16).fill(Color(.systemBackground))
                     .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
             )
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.gray.opacity(0.1), lineWidth: 1)
-            )
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
         }
         .disabled(!type.isAvailable)
     }
