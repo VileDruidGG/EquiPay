@@ -91,6 +91,8 @@ public struct PendingPayment: Identifiable {
 /// Android equivalent: SubscriptionGroupDetailScreen
 public struct GroupDetailView: View {
 
+    // MARK: - Props
+
     let groupName: String
     let monthlyAmount: String
     let nextBillingDate: String
@@ -100,6 +102,8 @@ public struct GroupDetailView: View {
 
     @State private var members: [GroupMember]
     @State private var pendingPayments: [PendingPayment]
+
+    // MARK: - Init (mock)
 
     public init(
         groupName: String = "YouTube Premium Familiar",
@@ -120,6 +124,8 @@ public struct GroupDetailView: View {
         self._members = State(initialValue: members)
         self._pendingPayments = State(initialValue: pendingPayments)
     }
+
+    // MARK: - Body
 
     public var body: some View {
         ScrollView(showsIndicators: false) {
@@ -147,6 +153,8 @@ public struct GroupDetailView: View {
             }
         }
     }
+
+    // MARK: - Header
 
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -177,6 +185,8 @@ public struct GroupDetailView: View {
         )
     }
 
+    // MARK: - Content
+
     private var contentSection: some View {
         VStack(spacing: 16) {
             membersSection
@@ -185,6 +195,8 @@ public struct GroupDetailView: View {
             historialLink
         }
     }
+
+    // MARK: Estado de los miembros
 
     private var membersSection: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -208,8 +220,13 @@ public struct GroupDetailView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+        )
     }
+
+    // MARK: Pagos por confirmar
 
     private var pendingPaymentsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -234,23 +251,27 @@ public struct GroupDetailView: View {
                 .fill(Color(.systemBackground))
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+        )
     }
+
+    // MARK: Acciones rápidas
 
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Acciones rápidas")
                 .font(.headline)
             Button {
-                // Sin acción por ahora
+                // Sin acción por ahora — solo UI
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "bell").font(.body.bold())
                     Text("Enviar recordatorio ahora").font(.body.bold())
                 }
                 .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
+                .frame(maxWidth: .infinity).frame(height: 50)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
                         .fill(LinearGradient(
@@ -260,15 +281,14 @@ public struct GroupDetailView: View {
                 )
             }
             Button {
-                // Sin acción por ahora
+                // Sin acción por ahora — solo UI
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "slider.horizontal.3").font(.body)
                     Text("Editar grupo").font(.body)
                 }
                 .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
+                .frame(maxWidth: .infinity).frame(height: 50)
                 .background(
                     RoundedRectangle(cornerRadius: 14)
                         .fill(Color(.systemBackground))
@@ -282,12 +302,17 @@ public struct GroupDetailView: View {
                 .fill(Color(.systemBackground))
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+        )
     }
+
+    // MARK: Link historial
 
     private var historialLink: some View {
         Button {
-            // Sin acción por ahora
+            // Sin acción por ahora — solo UI
         } label: {
             HStack {
                 Text("Ver historial completo").font(.subheadline.bold())
@@ -299,19 +324,25 @@ public struct GroupDetailView: View {
         .padding(.horizontal, 4)
     }
 
-    static let defaultMembers: [GroupMember] = [
-        GroupMember(initial: "A", name: "Ana",    amount: "$50", status: .paid,    note: "+3 meses adelantados"),
-        GroupMember(initial: "C", name: "Carlos",  amount: "$50", status: .paid,    note: nil),
-        GroupMember(initial: "M", name: "María",   amount: "$50", status: .pending, note: nil),
-        GroupMember(initial: "L", name: "Luis",    amount: "$50", status: .pending, note: nil),
-        GroupMember(initial: "S", name: "Sofía",   amount: "$50", status: .overdue, note: nil),
+    // MARK: - Mock data
+    // public static requerido por Swift 6: sin modificador explícito,
+    // los miembros static de un tipo public son internal por defecto.
+
+    public static let defaultMembers: [GroupMember] = [
+        GroupMember(initial: "A", name: "Ana",   amount: "$50", status: .paid,    note: "+3 meses adelantados"),
+        GroupMember(initial: "C", name: "Carlos", amount: "$50", status: .paid,    note: nil),
+        GroupMember(initial: "M", name: "María",  amount: "$50", status: .pending, note: nil),
+        GroupMember(initial: "L", name: "Luis",   amount: "$50", status: .pending, note: nil),
+        GroupMember(initial: "S", name: "Sofía",  amount: "$50", status: .overdue, note: nil),
     ]
 
-    static let defaultPendingPayments: [PendingPayment] = [
-        PendingPayment(initial: "M", name: "María", amount: "$50",  period: "1 mes",   date: "10 may"),
+    public static let defaultPendingPayments: [PendingPayment] = [
+        PendingPayment(initial: "M", name: "María", amount: "$50",  period: "1 mes",  date: "10 may"),
         PendingPayment(initial: "L", name: "Luis",   amount: "$100", period: "2 meses", date: "9 may"),
     ]
 }
+
+// MARK: - DetailStatCard
 
 private struct DetailStatCard: View {
     let label: String
@@ -330,6 +361,8 @@ private struct DetailStatCard: View {
         )
     }
 }
+
+// MARK: - MemberRow
 
 private struct MemberRow: View {
     let member: GroupMember
@@ -361,8 +394,11 @@ private struct MemberRow: View {
     }
 }
 
+// MARK: - PendingPaymentCard
+
 private struct PendingPaymentCard: View {
     let payment: PendingPayment
+
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
