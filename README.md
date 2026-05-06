@@ -62,14 +62,14 @@ presentación. La elección busca paridad entre iOS y Android.
 
 ### Decisiones arquitectónicas clave
 
-1. **Modularización por feature + módulos compartidos.** Cada feature vive en su propio módulo SPM (iOS) / módulo Gradle (Android).
-2. **Capas internas:** `data/` · `domain/` · `presentation/` (Views + ViewModels + Coordinator).
+1. **Modularización por feature + módulos compartidos.**
+2. **Capas internas:** `data/` · `domain/` · `presentation/`.
 3. **MVVM:** iOS usa `ObservableObject` + `@Published`; Android usará `ViewModel` + `StateFlow`.
-4. **Coordinator pattern:** la navegación la decide el Coordinator, no la View. Las features no se importan entre sí.
-5. **Design System independiente:** componentes sin lógica de negocio, API pública igual en iOS y Android.
-6. **Inyección por constructor:** las dependencias se pasan en el `init`.
+4. **Coordinator pattern:** la navegación la decide el Coordinator, no la View.
+5. **Design System independiente:** componentes sin lógica de negocio.
+6. **Inyección por constructor:** dependencias en el `init`.
 
-> **⚠️ Deuda técnica documentada:** `Home` importa `Groups` directamente para acceder a `GroupDetailView`. Esto se resolverá cuando `GroupDetailView` se mueva a `SharedDomain` o se exponga a través de un callback en el coordinator.
+> **⚠️ Deuda técnica documentada:** `Home` importa `Groups` directamente para acceder a `GroupDetailView`. Se resolverá cuando `GroupDetailView` se mueva a `SharedDomain`.
 
 ### Patrones de diseño aplicados
 
@@ -95,7 +95,7 @@ EquiPay/
 │   │   ├── Onboarding/
 │   │   ├── Auth/
 │   │   ├── Home/          ← importa Groups (deuda técnica temporal)
-│   │   ├── Groups/        ← incluye GroupDetailView
+│   │   ├── Groups/        ← incluye GroupDetailView + GroupSettingsView
 │   │   ├── CreateGroup/   ← incluye CreateSubscriptionSheet (5 pasos)
 │   │   ├── Activity/
 │   │   ├── Profile/
@@ -119,10 +119,10 @@ EquiPay/
 |--------|--------|-----------------|
 | **Onboarding** | 🟢 Implementado | Carrusel de 6 features con autoplay, indicadores tap-to-go, CTAs `Log in` / `Sign up`. |
 | **Auth** | 🟡 UI lista, sin lógica real | `LoginView`, `SignUpView`, ViewModels, `AuthCoordinator`, `AuthContainer`. |
-| **Home** | 🟡 UI con datos mock | Header gradiente, `SummaryCard`, `ExpenseCard`, `QuickActionCard`. YouTube Premium navega a `GroupDetailView` vía `NavigationLink`. |
-| **Groups** | 🟡 UI con datos mock | `GroupsView`: lista con `GroupCategory` enum. Suscripciones navegan a `GroupDetailView`. `GroupDetailView`: stat cards, miembros con badges (Pagado/Pendiente/Atrasado), pagos por confirmar (Confirmar/Rechazar solo UI), acciones rápidas, link historial. |
-| **CreateGroup** | 🟡 UI funcional (sin backend) | Pantalla "Crear grupo" con selector de tipo. **Suscripción mensual** abre `CreateSubscriptionSheet`: flujo de 5 pasos con navegación real, validación por paso y botón "Crear grupo" deshabilitado hasta completar todo. Pasos: Servicio (nombre + costo + día cobro) → Miembros (correo con validación @ y punto, lista editable) → División (partes iguales o manual con validación de suma) → Datos bancarios (banco + titular + CLABE obligatorios, tarjeta opcional) → Recordatorios (mensaje 0/200 + selector de días con `FlowLayout`). |
-| **Activity** | 🟡 UI con datos mock | Selector segmentado custom. **Notificaciones:** 3 tarjetas. **Historial:** `HistorySection` por mes, `HistoryItem` con tipo (saliente=rojo, entrante=verde, evento=purple), subtítulo `grupo·fecha` y monto. |
+| **Home** | 🟡 UI con datos mock | Header gradiente, `SummaryCard`, `ExpenseCard`, `QuickActionCard`. YouTube Premium navega a `GroupDetailView`. |
+| **Groups** | 🟡 UI con datos mock | `GroupsView`: lista con `GroupCategory` enum, suscripciones → `GroupDetailView`. `GroupDetailView`: stat cards, miembros con badges (Pagado/Pendiente/Atrasado), pagos por confirmar (Confirmar/Rechazar), acciones rápidas. Botón "Editar grupo" → `GroupSettingsView`. `GroupSettingsView`: toggles de notificaciones con dropdowns animados, mensaje personalizado 0/200, vista previa en tiempo real, toast de confirmación. |
+| **CreateGroup** | 🟡 UI funcional (sin backend) | Selector de tipo. Suscripción mensual abre `CreateSubscriptionSheet`: 5 pasos con navegación real y validación por paso (Servicio → Miembros → División → Datos bancarios → Recordatorios). |
+| **Activity** | 🟡 UI con datos mock | Selector segmentado custom. Notificaciones: 3 tarjetas. Historial: `HistorySection` por mes con `HistoryItem` (saliente=rojo, entrante=verde, evento=purple). |
 | **Profile** | 🟡 UI con datos mock | Avatar+inicial, 3 stat cards, menú teal, Cerrar sesión (solo UI), versión. |
 | **MainTab** | 🟡 Estructura completa | 5 pestañas en español conectadas. `selectedTabIndex: Int` para navegación entre tabs. |
 
@@ -162,9 +162,10 @@ EquiPayApp
 - ✅ Navegación Login ↔ Sign Up.
 - ✅ Home con resumen, grupos recientes y acciones rápidas.
 - ✅ Grupos recientes de tipo suscripción navegan al detalle desde Home.
-- ✅ Grupos: lista completa, botón crear grupo, navegación al detalle para suscripciones.
-- ✅ Detalle de grupo: stat cards, estado de miembros, pagos por confirmar, acciones rápidas.
-- ✅ Crear grupo: selector de tipo con Próximamente en Evento único.
+- ✅ **Mis grupos**: lista completa, botón crear grupo, navegación al detalle para suscripciones.
+- ✅ **Detalle de grupo** (`GroupDetailView`): stat cards, estado de miembros, pagos por confirmar, acciones rápidas.
+- ✅ **Ajustes de grupo** (`GroupSettingsView`): notificaciones con toggles y dropdowns animados, mensaje personalizado, vista previa en tiempo real, toast de confirmación.
+- ✅ **Crear grupo**: selector de tipo con Próximamente en Evento único.
 - ✅ **Flujo de creación de suscripción** en 5 pasos con navegación real y validación por paso.
 - ✅ Actividad: Notificaciones y Historial agrupado por mes.
 - ✅ Perfil: avatar, stats, menú, cerrar sesión.
@@ -180,7 +181,7 @@ EquiPayApp
 - Resolver deuda técnica Home → Groups.
 - Crear / editar / eliminar grupos y gastos.
 - Cálculo de balances.
-- Notificaciones push.
+- Notificaciones push reales.
 - Android (Kotlin / Jetpack Compose).
 - Tests unitarios y de UI.
 
@@ -236,7 +237,7 @@ open EquiPay.xcodeproj
 ### Corto plazo
 - [ ] Cablear `AppCoordinator` → `MainTabView` al finalizar Auth.
 - [ ] Mover `GroupDetailView` a `SharedDomain` (resolver deuda técnica).
-- [ ] Conectar flujo de creación de suscripción con el modelo de dominio.
+- [ ] Conectar flujos de creación y edición con el modelo de dominio.
 - [ ] Definir entidades base en `SharedDomain`.
 - [ ] Tests unitarios en ViewModels y validaciones.
 

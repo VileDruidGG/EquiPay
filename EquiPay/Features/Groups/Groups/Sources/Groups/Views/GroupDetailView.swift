@@ -173,14 +173,11 @@ public struct GroupDetailView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 60)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 28)
+        .padding(.top, 60).padding(.horizontal, 20).padding(.bottom, 28)
         .background(
             LinearGradient(
                 colors: [Color(red: 0.24, green: 0.78, blue: 0.75), Color.purple],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+                startPoint: .topLeading, endPoint: .bottomTrailing
             )
         )
     }
@@ -202,9 +199,7 @@ public struct GroupDetailView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Estado de los miembros")
                 .font(.headline)
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, 12)
+                .padding(.horizontal, 16).padding(.top, 16).padding(.bottom, 12)
             ForEach(Array(members.enumerated()), id: \.element.id) { index, member in
                 VStack(spacing: 0) {
                     MemberRow(member: member)
@@ -220,10 +215,7 @@ public struct GroupDetailView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
-        )
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
     }
 
     // MARK: Pagos por confirmar
@@ -231,14 +223,11 @@ public struct GroupDetailView: View {
     private var pendingPaymentsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Pagos por confirmar")
-                    .font(.headline)
+                Text("Pagos por confirmar").font(.headline)
                 Spacer()
                 Text("\(pendingPayments.count) nuevos")
-                    .font(.caption).bold()
-                    .foregroundColor(Color.orange)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
+                    .font(.caption).bold().foregroundColor(Color.orange)
+                    .padding(.horizontal, 10).padding(.vertical, 4)
                     .background(Capsule().fill(Color.orange.opacity(0.12)))
             }
             ForEach(pendingPayments) { payment in
@@ -251,18 +240,15 @@ public struct GroupDetailView: View {
                 .fill(Color(.systemBackground))
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
-        )
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
     }
 
     // MARK: Acciones rápidas
 
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Acciones rápidas")
-                .font(.headline)
+            Text("Acciones rápidas").font(.headline)
+
             Button {
                 // Sin acción por ahora — solo UI
             } label: {
@@ -280,8 +266,10 @@ public struct GroupDetailView: View {
                         ))
                 )
             }
-            Button {
-                // Sin acción por ahora — solo UI
+
+            // Navega a GroupSettingsView
+            NavigationLink {
+                GroupSettingsView(groupName: groupName)
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "slider.horizontal.3").font(.body)
@@ -302,10 +290,7 @@ public struct GroupDetailView: View {
                 .fill(Color(.systemBackground))
                 .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
-        )
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray.opacity(0.1), lineWidth: 1))
     }
 
     // MARK: Link historial
@@ -325,8 +310,6 @@ public struct GroupDetailView: View {
     }
 
     // MARK: - Mock data
-    // public static requerido por Swift 6: sin modificador explícito,
-    // los miembros static de un tipo public son internal por defecto.
 
     public static let defaultMembers: [GroupMember] = [
         GroupMember(initial: "A", name: "Ana",   amount: "$50", status: .paid,    note: "+3 meses adelantados"),
@@ -338,7 +321,7 @@ public struct GroupDetailView: View {
 
     public static let defaultPendingPayments: [PendingPayment] = [
         PendingPayment(initial: "M", name: "María", amount: "$50",  period: "1 mes",  date: "10 may"),
-        PendingPayment(initial: "L", name: "Luis",   amount: "$100", period: "2 meses", date: "9 may"),
+        PendingPayment(initial: "L", name: "Luis",  amount: "$100", period: "2 meses", date: "9 may"),
     ]
 }
 
